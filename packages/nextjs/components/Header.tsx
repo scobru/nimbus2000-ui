@@ -14,9 +14,8 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
     <Link
       href={href}
       passHref
-      className={`${
-        isActive ? "bg-secondary shadow-md" : ""
-      } hover:bg-secondary hover:shadow-md focus:bg-secondary py-1.5 px-3 text-sm rounded-full gap-2`}
+      className={`${isActive ? "bg-secondary shadow-md" : ""
+        } hover:bg-secondary hover:shadow-md focus:bg-secondary py-1.5 px-3 text-sm rounded-full gap-2`}
     >
       {children}
     </Link>
@@ -37,9 +36,17 @@ export const Header = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink href="/">Home</NavLink>
+        <NavLink href="/"><strong>Home</strong></NavLink>
       </li>
       <li>
+        <NavLink href="/forecast">
+          <div className="font-semibold">
+            Forecast
+          </div>
+
+        </NavLink>
+      </li>
+      {/* <li>
         <NavLink href="/debug">
           <BugAntIcon className="h-4 w-4" />
           Debug Contracts
@@ -56,7 +63,7 @@ export const Header = () => {
           <MagnifyingGlassIcon className="h-4 w-4" />
           Block Explorer
         </NavLink>
-      </li>
+      </li> */}
     </>
   );
 
@@ -86,12 +93,12 @@ export const Header = () => {
           )}
         </div>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6">
-          <div className="flex relative w-10 h-10">
-            <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
-          </div>
+          {/*  <div className="flex relative w-10 h-10">
+            <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.png" />
+          </div> */}
           <div className="flex flex-col">
-            <span className="font-bold leading-tight">Scaffold-eth</span>
-            <span className="text-xs">Ethereum dev stack</span>
+            <span className="font-bold  leading-tight text-2xl">NIMBUS 2000</span>
+            <span className="text-xs  font-semibold">BTC Forecasting with AI superpower🧹🪄💫</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks}</ul>

@@ -19,6 +19,11 @@ h4 {
   line-height: 1;
 }
 
+h1,h2,h3 {
+ 
+  font-family: 'Montserrat', sans-serif;
+  /* rest css code also here */
+  }
 p {
   margin: 1rem 0;
 }
@@ -30,3 +35,5 @@ p {
 .btn.btn-ghost {
   @apply shadow-none;
 }
+
+

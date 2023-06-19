@@ -948,6 +948,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@kurkle/color@npm:^0.3.0":
+  version: 0.3.2
+  resolution: "@kurkle/color@npm:0.3.2"
+  checksum: 79e97b31f8f6efb28c69d373f94b0c7480226fe8ec95221f518ac998e156444a496727ce47de6d728eb5c3369288e794cba82cae34253deb0d472d3bfe080e49
+  languageName: node
+  linkType: hard
+
 "@ledgerhq/connect-kit-loader@npm:^1.0.1":
   version: 1.0.2
   resolution: "@ledgerhq/connect-kit-loader@npm:1.0.2"
@@ -1108,6 +1115,13 @@ __metadata:
   dependencies:
     glob: 7.1.7
   checksum: 15d3b5913a56d40c7ad33c77f5285a2388a3a4b4da2eb80a3899ac4b871c7bfca74fd45f98fcac3d6a91c8dce738da2661cf71e7e3116a14d5da0d5b68939e8d
+  languageName: node
+  linkType: hard
+
+"@next/font@npm:^13.4.6":
+  version: 13.4.6
+  resolution: "@next/font@npm:13.4.6"
+  checksum: 9c75c145d8002b4031335a6d8b868a329138f580f4ce70c71c8734f600ea2b7f3af99ccaede5e1ed57b019001fb1928b313f18b00bca97fcbacbef24c57b0151
   languageName: node
   linkType: hard
 
@@ -1813,6 +1827,7 @@ __metadata:
     "@ethersproject/networks": ^5.7.1
     "@ethersproject/web": ^5.7.1
     "@heroicons/react": ^2.0.11
+    "@next/font": ^13.4.6
     "@rainbow-me/rainbowkit": ^0.11.0
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/node": ^17.0.35
@@ -1822,6 +1837,8 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.39.0
     "@uniswap/sdk": ^3.0.3
     autoprefixer: ^10.4.12
+    chart.js: ^4.3.0
+    chartjs: ^0.3.24
     daisyui: ^2.31.0
     eslint: ^8.15.0
     eslint-config-next: ^13.1.6
@@ -4923,6 +4940,22 @@ __metadata:
   version: 0.0.2
   resolution: "charenc@npm:0.0.2"
   checksum: 81dcadbe57e861d527faf6dd3855dc857395a1c4d6781f4847288ab23cffb7b3ee80d57c15bba7252ffe3e5e8019db767757ee7975663ad2ca0939bb8fcaf2e5
+  languageName: node
+  linkType: hard
+
+"chart.js@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "chart.js@npm:4.3.0"
+  dependencies:
+    "@kurkle/color": ^0.3.0
+  checksum: 157ceaa3815665163cb30ccc221a5af40834dca940faa6ec02cb95406bf3e83c15c5f36ad950a1716c9d199e87f7b9be953227c4d9d445d593536175b47bbab8
+  languageName: node
+  linkType: hard
+
+"chartjs@npm:^0.3.24":
+  version: 0.3.24
+  resolution: "chartjs@npm:0.3.24"
+  checksum: 5b4a1a6cfa21ddad12f8be905203771d2291764b4a7cdab1f58f20a6b2cde7d4f0acc7ab9b39659979e24345ae8912af0572143fca3a66046a95f8b6a8724a52
   languageName: node
   linkType: hard
 
