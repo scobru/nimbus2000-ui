@@ -31,6 +31,7 @@ const Forecast: NextPage = () => {
   const [theta_chart, setThetaChart] = useState<any>()
   const [tft_chart, setTftChart] = useState<any>()
   const [datachart, setDataChart]: any = useState<any>();
+  const [dataHistory, setDataHistory]: any = useState<any>();
 
   const txData = useTransactor(signer as ethers.Signer)
   const tiersUrl = "https://tiersapp.vercel.app/viewTier?addr=0xCe61B3ECeF196E5818D85d682Fcc171A622b4c8B"
@@ -107,6 +108,31 @@ const Forecast: NextPage = () => {
     }
   };
 
+  const fetchApiHistory = async () => {
+    console.log("fetching data");
+    const url = process.env.NEXT_PUBLIC_API_URL + "data_history/";
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'Authorization': String(NEXT_PUBLIC_API_SECRET_KEY)
+        },
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      setDataHistory(data);
+      console.log("data history", (data))
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   const fetchApi = async () => {
     console.log("fetching data");
     const url = process.env.NEXT_PUBLIC_API_URL + "data/";
@@ -158,6 +184,7 @@ const Forecast: NextPage = () => {
     }
     await fetchFee()
     await fetchApi()
+    await fetchApiHistory()
     await getImages()
 
     console.log(datachart)
@@ -385,10 +412,28 @@ const Forecast: NextPage = () => {
                 </div>
               </div>
             </div>
-            <div className="text-4xl my-10 text-left">
-              <div className="text-4xl font-bold">TECHNICAL ANALYSIS</div>
+            <h1 className="text-4xl font-bold my-5">LAST SIGNALS</h1>
+
+            <div className="text-4xl my-10 text-left overflow-hidden overflow-y-scroll h-80 mb-5">
+              {dataHistory && (
+                dataHistory.map((item, index) => (
+                  <div className="text-2xl font-base">
+                    ------------------------
+                    <p>{item.date}: {item['prediction signal']}</p>
+                    <p>selected model: {item['selected model']}</p>
+                    <p>MAPE: {item[String(item['selected model']) + "_MAPE"]} %</p>
+                  </div>
+
+                ))
+              )}
+              <div className="grid md:grid-cols-2 gap-5 xl:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 my-auto mb-10">
+                <div className="text-4xl my-10 text-left ">
+                </div>
+              </div>
             </div>
-            <div className="grid md:grid-cols-2 gap-5 xl:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 my-auto mb-10">
+            <div className="text-4xl font-bold m-5">TECHNICAL ANALYSIS</div>
+
+            <div className="grid text-4xl sm:grid-cols md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 my-10 text-left ">
               <div className=" my-10">
                 <div className="text-2xl font-bold">TREND FOLLOW</div>
                 {data && (
@@ -446,6 +491,7 @@ const Forecast: NextPage = () => {
                 )}
               </div>
             </div>
+
           </div>
         </div>
       ) : null
