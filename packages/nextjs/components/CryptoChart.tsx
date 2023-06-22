@@ -1,13 +1,4 @@
-import { bgColors } from "react-daisyui/dist/constants";
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const CryptoChart = (datachart: any) => {
   const lineColors: any = {
@@ -52,8 +43,10 @@ const CryptoChart = (datachart: any) => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="Date" domain={["auto", "auto"]} />
           <YAxis domain={["auto", "auto"]} />
-
-          <Tooltip contentStyle={{ backgroundColor: "black", fontStyle: "white" }} itemSorter={(item: any) => -item.value} />
+          <Tooltip
+            contentStyle={{ backgroundColor: "black", fontStyle: "white" }}
+            itemSorter={(item: any) => -item.value}
+          />
           {/*           
           <Legend />
            */}{" "}

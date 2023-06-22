@@ -173,7 +173,6 @@ const Forecast: NextPage = () => {
         item.Date = new Date(item.Date - 1000 * 1000).toLocaleDateString("fr-FR");
       });
 
-
       setDataChart(data);
       console.log("data chart", data);
     } catch (error) {
@@ -469,14 +468,30 @@ const Forecast: NextPage = () => {
                 </thead>
                 <tbody>
                   {dataHistory &&
-                    dataHistory.map((item: { [x: string]: any; date: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
-                      <tr key={index} className="text-secondary-content bg-primary">
-                        <td className="py-2 px-4 border-b">{item.date}</td>
-                        <td className="py-2 px-4 border-b">{item["prediction signal"]}</td>
-                        <td className="py-2 px-4 border-b">{item["selected model"]}</td>
-                        <td className="py-2 px-4 border-b">{item[String(item["selected model"]) + "_MAPE"]}%</td>
-                      </tr>
-                    ))}
+                    dataHistory.map(
+                      (
+                        item: {
+                          [x: string]: any;
+                          date:
+                            | string
+                            | number
+                            | boolean
+                            | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+                            | React.ReactFragment
+                            | React.ReactPortal
+                            | null
+                            | undefined;
+                        },
+                        index: React.Key | null | undefined,
+                      ) => (
+                        <tr key={index} className="text-secondary-content bg-primary">
+                          <td className="py-2 px-4 border-b">{item.date}</td>
+                          <td className="py-2 px-4 border-b">{item["prediction signal"]}</td>
+                          <td className="py-2 px-4 border-b">{item["selected model"]}</td>
+                          <td className="py-2 px-4 border-b">{item[String(item["selected model"]) + "_MAPE"]}%</td>
+                        </tr>
+                      ),
+                    )}
                 </tbody>
               </table>
             </div>
