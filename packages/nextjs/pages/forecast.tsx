@@ -1,11 +1,11 @@
-import React, { useState, useEffect, use } from "react";
-import type { NextPage } from "next";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useAccount, useProvider, useSigner } from "wagmi";
 import { ethers } from "ethers";
-import { useTransactor } from "~~/hooks/scaffold-eth";
 import { formatEther } from "ethers/lib/utils.js";
+import type { NextPage } from "next";
+import { useAccount, useProvider, useSigner } from "wagmi";
 import CryptoChart from "~~/components/CryptoChart";
+import { useTransactor } from "~~/hooks/scaffold-eth";
 
 const Forecast: NextPage = () => {
   const [data, setData]: any = useState<any>();
@@ -13,62 +13,61 @@ const Forecast: NextPage = () => {
   const address = account ? account.address : "";
   const provider = useProvider();
   const { data: signer } = useSigner();
-  const [blurOn, setBlurOn] = useState("")
-  const [fee, setFee] = useState(0)
-  const [close_chart, setCloseChart] = useState<any>()
-  const [regression_chart, setRegressionChart] = useState<any>()
-  const [autoselect_chart, setAutoSelectChart] = useState<any>()
-  const [autoselect_ema_chart, setAutoSelectEmaChart] = useState<any>()
-  const [rnn_chart, setRnnChart] = useState<any>()
-  const [brnn0_chart, setBrnn0Chart] = useState<any>()
-  const [brnn1_chart, setBrnn1Chart] = useState<any>()
-  const [brnn2_chart, setBrnn2Chart] = useState<any>()
-  const [nbeats_chart, setNbeatsChart] = useState<any>()
-  const [tcn_chart, setTcnChart] = useState<any>()
-  const [trans_chart, setTransChart] = useState<any>()
-  const [theta_chart, setThetaChart] = useState<any>()
-  const [tft_chart, setTftChart] = useState<any>()
+  const [blurOn, setBlurOn] = useState("");
+  const [fee, setFee] = useState(0);
+  const [close_chart, setCloseChart] = useState<any>();
+  const [regression_chart, setRegressionChart] = useState<any>();
+  const [autoselect_chart, setAutoSelectChart] = useState<any>();
+  const [autoselect_ema_chart, setAutoSelectEmaChart] = useState<any>();
+  const [rnn_chart, setRnnChart] = useState<any>();
+  const [brnn0_chart, setBrnn0Chart] = useState<any>();
+  const [brnn1_chart, setBrnn1Chart] = useState<any>();
+  const [brnn2_chart, setBrnn2Chart] = useState<any>();
+  const [nbeats_chart, setNbeatsChart] = useState<any>();
+  const [tcn_chart, setTcnChart] = useState<any>();
+  const [trans_chart, setTransChart] = useState<any>();
+  const [theta_chart, setThetaChart] = useState<any>();
+  const [tft_chart, setTftChart] = useState<any>();
   const [datachart, setDataChart]: any = useState<any>();
   const [dataHistory, setDataHistory]: any = useState<any>();
 
-  const txData = useTransactor(signer as ethers.Signer)
-  const tiersUrl = "https://tiersapp.vercel.app/viewTier?addr=0xCe61B3ECeF196E5818D85d682Fcc171A622b4c8B"
-  const tiersAddress = "0xCe61B3ECeF196E5818D85d682Fcc171A622b4c8B"
+  const txData = useTransactor(signer as ethers.Signer);
+  const tiersUrl = "https://tiersapp.vercel.app/viewTier?addr=0xCe61B3ECeF196E5818D85d682Fcc171A622b4c8B";
+  const tiersAddress = "0xCe61B3ECeF196E5818D85d682Fcc171A622b4c8B";
   const tiersAbi = [
     "function getSubscriptionStatus(address _addr) public view returns (bool)",
     "function subscribe() public payable",
-    "function fee() public view returns (uint256)"
-  ]
-  const tiersContract = new ethers.Contract(tiersAddress, tiersAbi, signer || provider)
-  const [isValidSubscription, setIsValidSubscription] = useState(false)
+    "function fee() public view returns (uint256)",
+  ];
+  const tiersContract = new ethers.Contract(tiersAddress, tiersAbi, signer || provider);
+  const [isValidSubscription, setIsValidSubscription] = useState(false);
 
   const fetchIsValidSubscription = async () => {
     if (tiersContract && address) {
-      const isValid = await tiersContract?.getSubscriptionStatus(address)
-      setIsValidSubscription(isValid)
-      console.log("isValidSubscription", isValid)
-      return isValid
+      const isValid = await tiersContract?.getSubscriptionStatus(address);
+      setIsValidSubscription(isValid);
+      console.log("isValidSubscription", isValid);
+      return isValid;
     }
-
-  }
+  };
 
   const fetchFee = async () => {
     if (tiersContract) {
-      const fee = await tiersContract?.fee()
-      console.log("fee", fee)
-      setFee(fee)
-      return fee
+      const fee = await tiersContract?.fee();
+      console.log("fee", fee);
+      setFee(fee);
+      return fee;
     }
-  }
+  };
 
   const subscribe = async () => {
     if (tiersContract) {
-      const tx = await tiersContract?.subscribe({ value: fee })
-      txData(tx.hash)
-      console.log("tx", tx)
-      return tx
+      const tx = await tiersContract?.subscribe({ value: fee });
+      txData(tx.hash);
+      console.log("tx", tx);
+      return tx;
     }
-  }
+  };
 
   const fetchImage = async (filename: string) => {
     console.log("fetching image" + filename);
@@ -78,7 +77,7 @@ const Forecast: NextPage = () => {
         headers: {
           Authorization: String(process.env.NEXT_PUBLIC_API_SECRET_KEY),
         },
-        method: "GET"
+        method: "GET",
       });
 
       if (!response.ok) {
@@ -86,16 +85,11 @@ const Forecast: NextPage = () => {
       }
       const blob = await response.blob();
       const imageUrl = URL.createObjectURL(blob);
-      const imageElement = document.createElement(filename);
-      console.log("imageUrl" + filename, imageUrl)
+      // const imageElement = document.createElement(filename);
+      console.log("imageUrl" + filename, imageUrl);
       return (
         <div>
-          <Image
-            src={imageUrl}
-            alt={filename}
-            width={500}
-            height={300}
-          />
+          <Image src={imageUrl} alt={filename} width={500} height={300} />
         </div>
       );
     } catch (error) {
@@ -109,18 +103,18 @@ const Forecast: NextPage = () => {
     try {
       const response = await fetch(url, {
         headers: {
-          'Authorization': String(process.env.NEXT_PUBLIC_API_SECRET_KEY)
+          Authorization: String(process.env.NEXT_PUBLIC_API_SECRET_KEY),
         },
-        method: 'GET',
+        method: "GET",
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
       setDataHistory(data);
-      console.log("data history", (data))
+      console.log("data history", data);
     } catch (error) {
       console.error(error);
     }
@@ -132,18 +126,17 @@ const Forecast: NextPage = () => {
     try {
       const response = await fetch(url, {
         headers: {
-          'Authorization': String(process.env.NEXT_PUBLIC_API_SECRET_KEY)
+          Authorization: String(process.env.NEXT_PUBLIC_API_SECRET_KEY),
         },
-        method: 'GET'
+        method: "GET",
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
 
       // result is a cvs file convert in array
       const result = await response.json();
-      console.log("result", result)
       const data = result.map((item: any) => {
         return {
           Date: item.Date,
@@ -172,18 +165,17 @@ const Forecast: NextPage = () => {
           predicted_brnn0: item.predicted_brnn0,
           predicted_brnn1: item.predicted_brnn1,
           predicted_brnn2: item.predicted_brnn2,
-        }
-      })
+        };
+      });
 
-
-      // Convert date unix to date
-
+      // Convert unix date to EU date
       data.forEach((item: any) => {
-        item.Date = new Date(item.Date * 1000).toLocaleDateString("en-US")
-      })
+        item.Date = new Date(item.Date - 1000 * 1000).toLocaleDateString("fr-FR");
+      });
 
-      setDataChart(data)
-      console.log("data chart", (data))
+
+      setDataChart(data);
+      console.log("data chart", data);
     } catch (error) {
       console.error(error);
     }
@@ -195,105 +187,112 @@ const Forecast: NextPage = () => {
     try {
       const response = await fetch(url, {
         headers: {
-          'Authorization': String(process.env.NEXT_PUBLIC_API_SECRET_KEY)
+          Authorization: String(process.env.NEXT_PUBLIC_API_SECRET_KEY),
         },
-        method: 'GET',
+        method: "GET",
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
       setData(data);
-
     } catch (error) {
       console.error(error);
     }
   };
 
   const getImages = async () => {
-
-    setCloseChart(await fetchImage('close_chart'))
-    setAutoSelectChart(await fetchImage('autoselect'))
-    setAutoSelectEmaChart(await fetchImage('autoselect_ema'))
-    setNbeatsChart(await fetchImage('nbeats'))
-    setTcnChart(await fetchImage('tcn'))
-    setThetaChart(await fetchImage('theta'))
-    setTftChart(await fetchImage('tft'))
-    setTransChart(await fetchImage('trans'))
-    setRnnChart(await fetchImage('rnn'))
-    setBrnn0Chart(await fetchImage('brnn0'))
-    setBrnn1Chart(await fetchImage('brnn1'))
-    setBrnn2Chart(await fetchImage('brnn2'))
-    setRegressionChart(await fetchImage('linregr'))
-  }
-
+    setCloseChart(await fetchImage("close_chart"));
+    setAutoSelectChart(await fetchImage("autoselect"));
+    setAutoSelectEmaChart(await fetchImage("autoselect_ema"));
+    setNbeatsChart(await fetchImage("nbeats"));
+    setTcnChart(await fetchImage("tcn"));
+    setThetaChart(await fetchImage("theta"));
+    setTftChart(await fetchImage("tft"));
+    setTransChart(await fetchImage("trans"));
+    setRnnChart(await fetchImage("rnn"));
+    setBrnn0Chart(await fetchImage("brnn0"));
+    setBrnn1Chart(await fetchImage("brnn1"));
+    setBrnn2Chart(await fetchImage("brnn2"));
+    setRegressionChart(await fetchImage("linregr"));
+  };
 
   const getValidSub = async function getValidSubscription() {
-    const isValid = await fetchIsValidSubscription()
-    if (isValid == false) {
-      setBlurOn("blur")
+    const isValid = await fetchIsValidSubscription();
+    if (isValid == false || signer == null) {
+      setBlurOn("blur");
     } else {
-      setBlurOn("noblur")
+      setBlurOn("noblur");
     }
-    await fetchFee()
-    await fetchApi()
-    await fetchApiHistory()
-    await fetchApiChart()
-    await getImages()
-  }
+    if (!signer || !address) {
+      setBlurOn("blur");
+    }
+    await fetchFee();
+    await fetchApi();
+    await fetchApiHistory();
+    await fetchApiChart();
+  };
 
   useEffect(() => {
     const checkValidSubscription = async () => {
-      await fetchIsValidSubscription()
-    }
-    checkValidSubscription()
-  }, [address, signer])
+      const isValid = await fetchIsValidSubscription();
+      return isValid;
+    };
+    checkValidSubscription();
+  }, [address, signer]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      getValidSub()
-    }, 10000);
+      const fetchValidSUb = async () => {
+        await getValidSub();
+      };
+      fetchValidSUb();
+    }, 50000);
     return () => clearInterval(interval);
   });
 
   // Activate blur on address disconnect
   useEffect(() => {
-    if (!signer || !address) {
-      setBlurOn("blur")
-    }
-  }, [signer, address])
+    const fetchValidSUb = async () => {
+      await getValidSub();
+    };
+    fetchValidSUb();
+  }, []);
 
   useEffect(() => {
     if (signer) {
-      getValidSub()
+      getValidSub();
     }
-  }, [signer])
+  }, [signer, address]);
 
   useEffect(() => {
-    getImages()
-  }, [])
+    getImages();
+  }, []);
 
   return (
     <div className="flex flex-col items-baseline p-10 mx-auto">
-      {!isValidSubscription ?
-        <div className="card  text-center justify-center mx-auto dark:dark:bg-primary rounded-md p-5 border-2 shadow-md shadow-black " >
+      {!isValidSubscription ? (
+        <div className="card font-medium leading-snug  text-center justify-center mx-auto dark:dark:bg-primary rounded-md p-5 border-2 shadow-md shadow-black content-center text-primary-content ">
           You are not subscribed to the forecast service.
-          < br />
+          <br />
           Please subcribe to the forecast service to view the dashboard.
-          < br />
-          ** Only for this month **
-          Montly Fee: {formatEther(fee)} MATIC
-          < br />
-          < br />
-          <a className="btn btn-ghost" href={tiersUrl}> Go to Subscription Page </a>
-          <button className="btn btn-ghost" disabled={String(isValidSubscription) == 'true'} onClick={subscribe}> Subscribe </button>
-        </div >
-        : null}
-      <div className="font-semibold">
-        **Data is fetched every 4 hours.
-      </div>
+          <br />
+          ** Only for this month ** Montly Fee: {formatEther(fee)} MATIC
+          <br />
+          <br />
+          <a className="btn btn-ghost" href={tiersUrl}>
+            {" "}
+            Go to Subscription Page{" "}
+          </a>
+          <button className="btn btn-ghost" disabled={String(isValidSubscription) == "true"} onClick={subscribe}>
+            {" "}
+            Subscribe{" "}
+          </button>
+        </div>
+      ) : null}
+      <div className="font-semibold my-5">**Data is fetched every 4 hours.</div>
       <br />
       {data ? (
         <div className={blurOn}>
@@ -305,29 +304,29 @@ const Forecast: NextPage = () => {
 
             <div className="grid md:grid-cols-2 gap-4 lg:grid-cols-2 xl:grid-cols-2 sm:grid-cols-1 my-5 text-left dark:dark:bg-primary p-10 rounded-md text-primary-content">
               <div className=" rounded-lg shadow-md p-6">
-                <h1 className="text-4xl font-semibold mb-4">BTC-USD {data && <span className="font-medium text-lg">last update: {data.date}</span>}</h1>
+                <h1 className="text-4xl font-semibold mb-4">
+                  BTC-USD {data && <span className="font-medium text-lg">last update: {data.date}</span>}
+                </h1>
                 {close_chart && <div className="my-4">{close_chart}</div>}
               </div>
               <div className=" rounded-lg shadow-md p-6">
-                <div className="text-4xl font-bold mb-4">FORECAST</div>
-                <div className="font-medium text-lg mb-4">5 days</div>
+                <div className="text-4xl font-bold my-5">SIGNAL</div>
+                <div className="font-medium text-xl mb-2">5 days</div>
                 <div className="text-2xl leading-relaxed text-left font-medium">
                   <div className="leading-tight">
                     Last: <strong>${data?.close_price ? Number(data.close_price).toFixed(2) : null}</strong>
                   </div>
                   <div>
-                    Future: <strong>${data[String(data['selected model']) + "_predicted_5D"]}</strong>
+                    Future: <strong>${data[String(data["selected model"]) + "_predicted_5D"]}</strong>
                   </div>
                   <div>
-                    Model: <strong>{data['selected model']}</strong>
+                    Model: <strong>{data["selected model"]}</strong>
                   </div>
                   <div>
-                    Signal: <strong>{data['prediction signal']}</strong>
+                    Signal: <strong>{data["prediction signal"]}</strong>
                   </div>
                 </div>
-
               </div>
-
             </div>
             <br />
             <h1 className="text-4xl font-bold my-5">FORECASTS</h1>
@@ -457,7 +456,7 @@ const Forecast: NextPage = () => {
               </div>
             </div>
 
-            <h1 className="text-4xl font-bold my-5">LAST SIGNALS</h1>
+            <div className="text-4xl font-bold my-10">LAST SIGNAL</div>
             <div className="overflow-x-auto max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
               <table className="table-compact ">
                 <thead>
@@ -470,23 +469,21 @@ const Forecast: NextPage = () => {
                 </thead>
                 <tbody>
                   {dataHistory &&
-                    dataHistory.map((item, index) => (
+                    dataHistory.map((item: { [x: string]: any; date: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
                       <tr key={index} className="text-secondary-content bg-primary">
                         <td className="py-2 px-4 border-b">{item.date}</td>
-                        <td className="py-2 px-4 border-b">{item['prediction signal']}</td>
-                        <td className="py-2 px-4 border-b">{item['selected model']}</td>
-                        <td className="py-2 px-4 border-b">{item[String(item['selected model']) + "_MAPE"]}%</td>
+                        <td className="py-2 px-4 border-b">{item["prediction signal"]}</td>
+                        <td className="py-2 px-4 border-b">{item["selected model"]}</td>
+                        <td className="py-2 px-4 border-b">{item[String(item["selected model"]) + "_MAPE"]}%</td>
                       </tr>
                     ))}
                 </tbody>
               </table>
             </div>
 
-
-
-            <div className="text-4xl font-bold my-5">TECHNICAL ANALYSIS</div>
-            <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-8">
-              <div className="my-10">
+            <div className="text-4xl font-bold my-10">TECHNICAL ANALYSIS</div>
+            <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-2">
+              <div className="my-2">
                 <div className="text-2xl font-bold">TREND FOLLOW</div>
                 {data && (
                   <table className="text-lg font-medium">
@@ -499,8 +496,7 @@ const Forecast: NextPage = () => {
                   </table>
                 )}
               </div>
-
-              <div className="my-5">
+              <div className="my-2">
                 <div className="text-2xl font-bold">EMA 20/150</div>
                 {data && (
                   <table className="text-lg font-medium">
@@ -566,11 +562,11 @@ const Forecast: NextPage = () => {
                     <tbody>
                       <tr>
                         <td>Signal Cross StockRSI:</td>
-                        <td>{data['Signal_STOCK_CROSS']}</td>
+                        <td>{data["Signal_STOCK_CROSS"]}</td>
                       </tr>
                       <tr>
                         <td>D Signal:</td>
-                        <td>{data['signal_STOCK_RSI_D']}</td>
+                        <td>{data["signal_STOCK_RSI_D"]}</td>
                       </tr>
                       <tr>
                         <td>D Signal Value:</td>
@@ -578,7 +574,7 @@ const Forecast: NextPage = () => {
                       </tr>
                       <tr>
                         <td>K Signal:</td>
-                        <td>{data['signal_STOCK_RSI_K']}</td>
+                        <td>{data["signal_STOCK_RSI_K"]}</td>
                       </tr>
                       <tr>
                         <td>K Signal Value:</td>
@@ -589,17 +585,11 @@ const Forecast: NextPage = () => {
                 )}
               </div>
             </div>
-
-
           </div>
         </div>
-      ) : null
-      }
-    </div >
-
+      ) : null}
+    </div>
   );
 };
 
 export default Forecast;
-
-
