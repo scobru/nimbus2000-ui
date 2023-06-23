@@ -248,7 +248,7 @@ const Forecast: NextPage = () => {
         await getValidSub();
       };
       fetchValidSUb();
-    }, 50000);
+    }, 5000);
     return () => clearInterval(interval);
   });
 
@@ -473,14 +473,14 @@ const Forecast: NextPage = () => {
                         item: {
                           [x: string]: any;
                           date:
-                            | string
-                            | number
-                            | boolean
-                            | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-                            | React.ReactFragment
-                            | React.ReactPortal
-                            | null
-                            | undefined;
+                          | string
+                          | number
+                          | boolean
+                          | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+                          | React.ReactFragment
+                          | React.ReactPortal
+                          | null
+                          | undefined;
                         },
                         index: React.Key | null | undefined,
                       ) => (
