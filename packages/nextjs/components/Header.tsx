@@ -13,9 +13,8 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
     <Link
       href={href}
       passHref
-      className={`${
-        isActive ? "bg-secondary shadow-md" : ""
-      } hover:bg-secondary hover:shadow-md focus:bg-secondary py-1.5 px-3  rounded-full gap-2`}
+      className={`${isActive ? "bg-secondary shadow-md" : ""
+        } hover:bg-secondary hover:shadow-md focus:bg-secondary py-1.5 px-3  rounded-full gap-2`}
     >
       {children}
     </Link>
@@ -41,8 +40,8 @@ export const Header = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink href="/forecast">
-          <div className="font-semibold ">Forecast</div>
+        <NavLink href="/data">
+          <div className="font-semibold ">Data</div>
         </NavLink>
       </li>
     </>

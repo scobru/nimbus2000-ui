@@ -7,7 +7,7 @@ import { useAccount, useProvider, useSigner } from "wagmi";
 import CryptoChart from "~~/components/CryptoChart";
 import { useTransactor } from "~~/hooks/scaffold-eth";
 
-const Forecast: NextPage = () => {
+const Data: NextPage = () => {
   const [data, setData]: any = useState<any>();
   const account = useAccount();
   const address = account ? account.address : "";
@@ -271,9 +271,9 @@ const Forecast: NextPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-baseline p-10 mx-auto">
+    <div className="flex items-baseline pt-10 flex-grow flex-col w-auto mx-auto">
       {!isValidSubscription ? (
-        <div className="card font-medium leading-snug  text-center justify-center mx-auto dark:dark:bg-primary rounded-md p-5 border-2 shadow-md shadow-black content-center text-primary-content ">
+        <div className="card font-medium leading-snug text-center justify-center mx-auto dark:dark:bg-trasparent rounded-md p- border-2 shadow-md shadow-black content-center text-trasparent-content ">
           You are not subscribed to the forecast service.
           <br />
           Please subcribe to the forecast service to view the dashboard.
@@ -296,17 +296,17 @@ const Forecast: NextPage = () => {
       {data ? (
         <div className={blurOn}>
           <div className="leading-tight">
-            <div className="text-3xl font-bold mb-5">CHARTS</div>
-            <div className="dark:dark:bg-primary  rounded-md">
+            <div className="text-3xl font-bold mb-5 mx-10">CHARTS</div>
+            <div className="dark:dark:bg-trasparent  rounded-md">
               <CryptoChart datachart={datachart} />
             </div>
-
-            <div className="grid md:grid-cols-2 gap-4 lg:grid-cols-2 xl:grid-cols-2 sm:grid-cols-1 my-5 text-left dark:dark:bg-primary p-10 rounded-md text-primary-content">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 my-5 text-left dark:dark:bg-transparent  rounded-md text-transparent-content">
               <div className=" rounded-lg shadow-md p-6">
                 <h1 className="text-4xl font-semibold mb-4">
-                  BTC-USD {data && <span className="font-medium text-lg">last update: {data.date}</span>}
+                  BTC-USD {data && <span className="font-medium text-lg"></span>}
                 </h1>
-                {close_chart && <div className="my-4">{close_chart}</div>}
+                last update: {data.date}
+                {close_chart && <div className="my-10">{close_chart}</div>}
               </div>
               <div className=" rounded-lg shadow-md p-6">
                 <div className="text-4xl font-bold my-5">SIGNAL</div>
@@ -328,10 +328,10 @@ const Forecast: NextPage = () => {
               </div>
             </div>
             <br />
-            <h1 className="text-4xl font-bold my-5">FORECASTS</h1>
+            <h1 className="text-4xl font-bold my-5 mx-10 ">FORECASTS</h1>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 sm:grid-cols my-auto mb-10 dark:dark:bg-primary text-primary-content p-10">
-              <div className="leading-tight bg-white dark:bg-primary dark:text-primary-content rounded-md p-6 shadow-md">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 my-auto mb-10 dark:dark:bg-transparent text-transparent-content ">
+              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 shadow-md">
                 <div className="text-2xl font-bold">Linear Regression</div>
                 {data && (
                   <div className="text-lg font-medium mt-4">
@@ -340,10 +340,10 @@ const Forecast: NextPage = () => {
                     <p>Signal: {data.linear_regression_signal}</p>
                   </div>
                 )}
-                {regression_chart && <div className="my-4">{regression_chart}</div>}
+                {regression_chart && <div className="my-10">{regression_chart}</div>}
               </div>
 
-              <div className="leading-tight bg-white dark:bg-primary dark:text-primary-content rounded-md p-6 shadow-md">
+              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 shadow-md">
                 <div className="text-2xl font-bold">Autoselect</div>
                 {data && (
                   <div className="text-lg font-medium mt-4">
@@ -352,10 +352,10 @@ const Forecast: NextPage = () => {
                     <p>Signal: {data.autoselect_signal}</p>
                   </div>
                 )}
-                {autoselect_chart && <div className="my-4">{autoselect_chart}</div>}
+                {autoselect_chart && <div className="my-10">{autoselect_chart}</div>}
               </div>
 
-              <div className="leading-tight bg-white dark:bg-primary dark:text-primary-content rounded-md p-6 shadow-md">
+              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 shadow-md">
                 <div className="text-2xl font-bold">Autoselect EMA5</div>
                 {data && (
                   <div className="text-lg font-medium mt-4">
@@ -364,10 +364,10 @@ const Forecast: NextPage = () => {
                     <p>Signal: {data.autoselect_ema_signal}</p>
                   </div>
                 )}
-                {autoselect_ema_chart && <div className="my-4">{autoselect_ema_chart}</div>}
+                {autoselect_ema_chart && <div className="my-10">{autoselect_ema_chart}</div>}
               </div>
 
-              <div className="leading-tight bg-white dark:bg-primary dark:text-primary-content rounded-md p-6 shadow-md">
+              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 shadow-md">
                 <div className="text-2xl font-bold">RNN</div>
                 {data && (
                   <div className="text-lg font-medium mt-4">
@@ -376,10 +376,10 @@ const Forecast: NextPage = () => {
                     <p>Signal: {data.rnn_signal}</p>
                   </div>
                 )}
-                {rnn_chart && <div className="my-4">{rnn_chart}</div>}
+                {rnn_chart && <div className="my-10">{rnn_chart}</div>}
               </div>
 
-              <div className="leading-tight bg-white dark:bg-primary dark:text-primary-content rounded-md p-6 shadow-md">
+              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 shadow-md">
                 <div className="text-2xl font-bold">NBEATS</div>
                 {data && (
                   <div className="text-lg font-medium mt-4">
@@ -388,10 +388,10 @@ const Forecast: NextPage = () => {
                     <p>{data.nbeats_signal}</p>
                   </div>
                 )}
-                {nbeats_chart && <div className="my-4">{nbeats_chart}</div>}
+                {nbeats_chart && <div className="my-10">{nbeats_chart}</div>}
               </div>
 
-              <div className="leading-tight bg-white dark:bg-primary dark:text-primary-content rounded-md p-6 shadow-md">
+              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 shadow-md">
                 <div className="text-2xl font-bold">TCN</div>
                 {data && (
                   <div className="text-lg font-medium mt-4">
@@ -400,10 +400,10 @@ const Forecast: NextPage = () => {
                     <p>Signal: {data.tcn_signal}</p>
                   </div>
                 )}
-                {tcn_chart && <div className="my-4">{tcn_chart}</div>}
+                {tcn_chart && <div className="my-10">{tcn_chart}</div>}
               </div>
 
-              <div className="leading-tight bg-white dark:bg-primary dark:text-primary-content rounded-md p-6 shadow-md">
+              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 shadow-md">
                 <div className="text-2xl font-bold">TRANS</div>
                 {data && (
                   <div className="text-lg font-medium mt-4">
@@ -412,10 +412,10 @@ const Forecast: NextPage = () => {
                     <p>Signal: {data.trans_signal}</p>
                   </div>
                 )}
-                {trans_chart && <div className="my-4">{trans_chart}</div>}
+                {trans_chart && <div className="my-10">{trans_chart}</div>}
               </div>
 
-              <div className="leading-tight bg-white dark:bg-primary dark:text-primary-content rounded-md p-6 shadow-md">
+              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 shadow-md">
                 <div className="text-2xl font-bold">THETA</div>
                 {data && (
                   <div className="text-lg font-medium mt-4">
@@ -424,10 +424,10 @@ const Forecast: NextPage = () => {
                     <p>Signal: {data.theta_signal}</p>
                   </div>
                 )}
-                {theta_chart && <div className="my-4">{theta_chart}</div>}
+                {theta_chart && <div className="my-10">{theta_chart}</div>}
               </div>
 
-              <div className="leading-tight bg-white dark:bg-primary dark:text-primary-content rounded-md p-6 shadow-md">
+              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 shadow-md">
                 <div className="text-2xl font-bold">TFT</div>
                 {data && (
                   <div className="text-lg font-medium mt-4">
@@ -436,10 +436,10 @@ const Forecast: NextPage = () => {
                     <p>Signal: {data.tft_signal}</p>
                   </div>
                 )}
-                {tft_chart && <div className="my-4">{tft_chart}</div>}
+                {tft_chart && <div className="my-10">{tft_chart}</div>}
               </div>
 
-              <div className="leading-tight bg-white dark:bg-primary dark:text-primary-content rounded-md p-6 shadow-md">
+              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 shadow-md">
                 <div className="text-2xl font-bold">BRNN</div>
                 {data && (
                   <div className="text-lg font-medium mt-4">
@@ -447,19 +447,19 @@ const Forecast: NextPage = () => {
                     <p>Signal: {data.brnn_signal}</p>
                   </div>
                 )}
-                <div className="my-4">
-                  {brnn0_chart && <div className="my-4">{brnn0_chart}</div>}
-                  {brnn1_chart && <div className="my-4">{brnn1_chart}</div>}
-                  {brnn2_chart && <div className="my-4">{brnn2_chart}</div>}
+                <div className="my-10">
+                  {brnn0_chart && <div className="my-10">{brnn0_chart}</div>}
+                  {brnn1_chart && <div className="my-10">{brnn1_chart}</div>}
+                  {brnn2_chart && <div className="my-10">{brnn2_chart}</div>}
                 </div>
               </div>
             </div>
 
-            <div className="text-4xl font-bold my-10">LAST SIGNAL</div>
-            <div className="overflow-x-auto max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+            <div className="text-4xl font-bold my-10 mx-10">LAST SIGNAL</div>
+            <div className="overflow-x-auto w-screen md:max-w-md lg:max-w-lg xl:max-w-xl">
               <table className="table-compact ">
                 <thead>
-                  <tr className="bg-neutral text-primary-content">
+                  <tr className="bg-neutral text-trasparent-content">
                     <th className="py-2 px-4 border-b">Date</th>
                     <th className="py-2 px-4 border-b">Prediction Signal</th>
                     <th className="py-2 px-4 border-b">Selected Model</th>
@@ -484,7 +484,7 @@ const Forecast: NextPage = () => {
                         },
                         index: React.Key | null | undefined,
                       ) => (
-                        <tr key={index} className="text-secondary-content bg-primary">
+                        <tr key={index} className="text-secondary-content bg-trasparent">
                           <td className="py-2 px-4 border-b">{item.date}</td>
                           <td className="py-2 px-4 border-b">{item["prediction signal"]}</td>
                           <td className="py-2 px-4 border-b">{item["selected model"]}</td>
@@ -495,9 +495,8 @@ const Forecast: NextPage = () => {
                 </tbody>
               </table>
             </div>
-
-            <div className="text-4xl font-bold my-10">TECHNICAL ANALYSIS</div>
-            <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-2">
+            <div className="text-4xl font-bold my-10 mx-10">TECHNICAL ANALYSIS</div>
+            <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-2 px-10">
               <div className="my-2">
                 <div className="text-2xl font-bold">TREND FOLLOW</div>
                 {data && (
@@ -607,4 +606,4 @@ const Forecast: NextPage = () => {
   );
 };
 
-export default Forecast;
+export default Data;
