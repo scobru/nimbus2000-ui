@@ -457,9 +457,9 @@ const Data: NextPage = () => {
 
             <div className="text-4xl font-bold my-10 mx-10">LAST SIGNAL</div>
             <div className="overflow-x-auto w-screen md:max-w-md lg:max-w-lg xl:max-w-xl">
-              <table className="table-compact ">
+              <table className="table-compact">
                 <thead>
-                  <tr className="bg-neutral text-trasparent-content">
+                  <tr className="bg-neutral text-primary-content">
                     <th className="py-2 px-4 border-b">Date</th>
                     <th className="py-2 px-4 border-b">Prediction Signal</th>
                     <th className="py-2 px-4 border-b">Selected Model</th>
@@ -484,7 +484,7 @@ const Data: NextPage = () => {
                         },
                         index: React.Key | null | undefined,
                       ) => (
-                        <tr key={index} className="text-secondary-content bg-trasparent">
+                        <tr key={index} className=" bg-trasparent">
                           <td className="py-2 px-4 border-b">{item.date}</td>
                           <td className="py-2 px-4 border-b">{item["prediction signal"]}</td>
                           <td className="py-2 px-4 border-b">{item["selected model"]}</td>
