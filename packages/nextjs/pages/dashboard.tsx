@@ -52,7 +52,6 @@ const Dashboard: NextPage = () => {
     if (tiersContract && address) {
       const isValid = await tiersContract?.getSubscriptionStatus(address);
       setIsValidSubscription(isValid);
-      console.log("isValidSubscription", isValid);
       return isValid;
     }
   };
@@ -60,7 +59,6 @@ const Dashboard: NextPage = () => {
   const fetchFee = async () => {
     if (tiersContract) {
       const fee = await tiersContract?.fee();
-      console.log("fee", fee);
       setFee(fee);
       return fee;
     }
@@ -71,13 +69,11 @@ const Dashboard: NextPage = () => {
       const result = txData(
         tiersContract?.subscribe({ value: fee })
       );
-      console.log("tx", result);
       return result;
     }
   };
 
   const fetchImage = async (filename: string) => {
-    console.log("fetching image" + filename);
     const url = process.env.NEXT_PUBLIC_API_URL + "image/" + filename;
     try {
       const response = await fetch(url, {
@@ -93,7 +89,6 @@ const Dashboard: NextPage = () => {
       const blob = await response.blob();
       const imageUrl = URL.createObjectURL(blob);
       // const imageElement = document.createElement(filename);
-      console.log("imageUrl" + filename, imageUrl);
       return (
         <div>
           <Image src={imageUrl} alt={filename} width={500} height={300} />
@@ -105,7 +100,7 @@ const Dashboard: NextPage = () => {
   };
 
   const fetchApiHistory = async () => {
-    console.log("fetching data history");
+
     const url = process.env.NEXT_PUBLIC_API_URL + "data_history/";
     try {
       const response = await fetch(url, {
@@ -121,14 +116,12 @@ const Dashboard: NextPage = () => {
 
       const data = await response.json();
       setDataHistory(data);
-      console.log("data history", data);
     } catch (error) {
       console.error(error);
     }
   };
 
   const fetchApiChart = async () => {
-    console.log("fetching data chart");
     const url = process.env.NEXT_PUBLIC_API_URL + "data_chart/";
     try {
       const response = await fetch(url, {
@@ -188,14 +181,12 @@ const Dashboard: NextPage = () => {
       });
 
       setDataChart(data);
-      console.log("data chart", data);
     } catch (error) {
       console.error(error);
     }
   };
 
   const fetchApi = async () => {
-    console.log("fetching data");
     const url = process.env.NEXT_PUBLIC_API_URL + "data/";
     try {
       const response = await fetch(url, {
@@ -211,7 +202,6 @@ const Dashboard: NextPage = () => {
 
       const data = await response.json();
       setData(data);
-      console.log("data", data);
     } catch (error) {
       console.error(error);
     }
