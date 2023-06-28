@@ -31,6 +31,7 @@ export const Footer = () => {
       <div className="w-full">
         <ul className="menu menu-horizontal w-full">
           <div className="flex justify-center items-center gap-2 text-sm w-full">
+
             <div>
               <a
                 href="https://github.com/scaffold-eth/se-2"
@@ -51,6 +52,17 @@ export const Footer = () => {
                 className="underline underline-offset-2"
               >
                 BuidlGuidl
+              </a>
+            </div>
+            by
+            <div>
+              <a
+                href="https://github.com/scobru"
+                target="_blank"
+                rel="noreferrer"
+                className="underline underline-offset-2"
+              >
+                Scobru
               </a>
             </div>
             <span>·</span>

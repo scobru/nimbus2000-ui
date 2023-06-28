@@ -1,0 +1,53 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity 0.8.17;
+
+import "./HttpRequestOracle.sol";
+import "./RequestConsumer.sol";
+
+contract HttpRequestConsumer is RequestConsumer {
+  using RequestLib for RequestLib.Request;
+
+  HttpRequestOracle httpOracle;
+  uint256 volume;
+
+  event RequestVolume(bytes32 indexed requestId, uint256 volume);
+
+  error FakeReporter();
+
+  constructor(address _oracle) {
+    httpOracle = HttpRequestOracle(_oracle);
+  }
+
+  function requestPriceData() public returns (bytes32) {
+    RequestLib.Request memory req = buildRequest(this._requestedDataCompleted.selector);
+    req.setId(keccak256(abi.encodePacked(block.timestamp, msg.sender)));
+    req.add("get", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD");
+
+    // Set the path to find the desired data in the API response, where the response format is:
+    // {"RAW":
+    //   {"ETH":
+    //    {"USD":
+    //     {
+    //      "VOLUME24HOUR": xxx.xxx,
+    //     }
+    //    }
+    //   }
+    //  }
+    // request.add("path", "RAW.ETH.USD.VOLUME24HOUR");
+    req.add("path", "RAW,ETH,USD,VOLUME24HOUR");
+    httpOracle.sendRequest(req);
+    return req.id;
+  }
+
+  function _requestedDataCompleted(bytes32 _requestId, uint256 _volume) public CheckReporter {
+    emit RequestVolume(_requestId, _volume);
+    volume = _volume;
+  }
+
+  modifier CheckReporter() {
+    if (httpOracle.getReporter(msg.sender) == false) {
+      revert FakeReporter();
+    }
+    _;
+  }
+}
