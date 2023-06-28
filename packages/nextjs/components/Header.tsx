@@ -40,8 +40,13 @@ export const Header = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink href="/data">
-          <div className="font-semibold ">Data</div>
+        <NavLink href="/dashboard">
+          <div className="font-semibold ">Dashboard</div>
+        </NavLink>
+      </li>
+      <li>
+        <NavLink href="https://scobru.gitbook.io/nimbus-2000/">
+          <div className="font-semibold ">Docs</div>
         </NavLink>
       </li>
     </>

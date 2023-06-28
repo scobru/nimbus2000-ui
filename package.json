@@ -1,5 +1,5 @@
 {
-  "name": "se-2",
+  "name": "nimbus-2000-ui",
   "version": "0.0.1",
   "private": true,
   "workspaces": {
@@ -9,24 +9,24 @@
     ]
   },
   "scripts": {
-    "account": "yarn workspace @se-2/hardhat account",
-    "chain": "yarn workspace @se-2/hardhat chain",
-    "fork": "yarn workspace @se-2/hardhat fork",
-    "deploy": "yarn workspace @se-2/hardhat deploy",
-    "verify": "yarn workspace @se-2/hardhat verify",
-    "compile": "yarn workspace @se-2/hardhat compile",
-    "generate": "yarn workspace @se-2/hardhat generate",
-    "hardhat:lint": "yarn workspace @se-2/hardhat lint",
-    "hardhat:lint-staged": "yarn workspace @se-2/hardhat lint-staged",
-    "hardhat:test": "yarn workspace @se-2/hardhat test",
-    "start": "yarn workspace @se-2/nextjs dev",
-    "next:lint": "yarn workspace @se-2/nextjs lint",
-    "next:format": "yarn workspace @se-2/nextjs format",
-    "next:check-types": "yarn workspace @se-2/nextjs check-types",
+    "account": "yarn workspace @nimbus-2000-ui/hardhat account",
+    "chain": "yarn workspace @nimbus-2000-ui/hardhat chain",
+    "fork": "yarn workspace @nimbus-2000-ui/hardhat fork",
+    "deploy": "yarn workspace @nimbus-2000-ui/hardhat deploy",
+    "verify": "yarn workspace @nimbus-2000-ui/hardhat verify",
+    "compile": "yarn workspace @nimbus-2000-ui/hardhat compile",
+    "generate": "yarn workspace @nimbus-2000-ui/hardhat generate",
+    "hardhat:lint": "yarn workspace @nimbus-2000-ui/hardhat lint",
+    "hardhat:lint-staged": "yarn workspace @nimbus-2000-ui/hardhat lint-staged",
+    "hardhat:test": "yarn workspace @nimbus-2000-ui/hardhat test",
+    "start": "yarn workspace @nimbus-2000-ui/nextjs dev",
+    "next:lint": "yarn workspace @nimbus-2000-ui/nextjs lint",
+    "next:format": "yarn workspace @nimbus-2000-ui/nextjs format",
+    "next:check-types": "yarn workspace @nimbus-2000-ui/nextjs check-types",
     "postinstall": "husky install",
     "precommit": "lint-staged",
-    "vercel": "yarn workspace @se-2/nextjs vercel",
-    "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo"
+    "vercel": "yarn workspace @nimbus-2000-ui/nextjs vercel",
+    "vercel:yolo": "yarn workspace @nimbus-2000-ui/nextjs vercel:yolo"
   },
   "packageManager": "yarn@3.2.3",
   "devDependencies": {

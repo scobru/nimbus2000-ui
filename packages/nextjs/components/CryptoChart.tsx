@@ -24,11 +24,18 @@ const CryptoChart = (datachart: any) => {
     predicted_brnn1: "#94be9d",
     adj_data_brnn2: "#78da9f",
     predicted_brnn2: "#94be9d",
+    adj_data_nhits: "#78da9f",
+    predicted_nhits: "#94be9d",
+    predicted_anom0: "#94be9d",
+    predicted_anom1: "#94be9d",
+    predicted_anom2: "#94be9d",
+    adj_data_regr: "#78da9f",
+    predicted_regr: "#94be9d",
   };
 
   return (
     <>
-      <ResponsiveContainer width="80%" height={500} className={"rounded-lg mx-auto "}>
+      <ResponsiveContainer width="100%" height={500} className={"rounded-lg mx-auto "}>
         <LineChart
           data={datachart.datachart}
           margin={{
