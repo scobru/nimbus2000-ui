@@ -1,8 +1,20 @@
-# Nimbus 2000
+# Page
+
+##
+
+##
 
 ## What is this?
 
 Nimbus 2000 is an ambitious project aiming to deliver more accurate price predictions for the cryptocurrency market. It leverages the [OpenBB SDK](https://github.com/OpenBB/OpenBB) to provide users with a feature-rich dashboard displaying results from various prediction models, including linear regression, TCN, N-Beats, NHITS, ARIMA and more.
+
+
+
+<div align="left">
+
+<figure><img src="https://nimbus2000.vercel.app/_next/image?url=%2Flogo.png&#x26;w=640&#x26;q=75&#x26;dpl=dpl_CnwfmbE1JfLtMiueQDzCvzzfCHQY" alt="" width="375"><figcaption></figcaption></figure>
+
+</div>
 
 ### Project Structure
 
@@ -44,5 +56,3 @@ Nimbus 2000 is released under the MIT license.
 ### Contacts
 
 If you have any questions or suggestions, please feel free to reach out.
-
-***
