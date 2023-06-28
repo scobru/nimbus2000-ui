@@ -35,7 +35,7 @@ contract HttpRequestConsumerWithHeader is RequestConsumer {
     // });
 
     req.add("get", "https://api.scobrudot.dev/data/");
-    req.addHeader("Authorization", "EFB5C6729D8CE3E03FD03AEC340540B24A788454D45E717089B1E59243E16F43");
+    req.addHeader("Authorization", "");
 
     // Set the path to find the desired data in the API response, where the response format is:
     //  {
