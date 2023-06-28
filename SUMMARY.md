@@ -1,3 +1,3 @@
 # Table of contents
 
-* [Page](README.md)
+* [Nimbus 2000](README.md)
