@@ -61,7 +61,7 @@ export const Header = () => {
           </div>
         </Link>
       </div>
-      <div className="navbar-center w-auto">
+      <div className="navbar-start w-auto">
         <div className="lg:hidden dropdown" ref={burgerMenuRef}>
           <button
             className={`ml-1 btn btn-ghost ${isDrawerOpen ? "hover:bg-secondary" : "hover:bg-transparent"}`}
@@ -94,3 +94,5 @@ export const Header = () => {
     </div>
   );
 };
+
+

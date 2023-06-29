@@ -350,10 +350,10 @@ const Dashboard: NextPage = () => {
                 <h1 className="text-4xl font-semibold mb-4 px-5">
                   BTC-USD {data && <span className="font-medium text-lg"></span>}
                 </h1>
-                <div className=" rounded-lg px-5">
+                <div className=" rounded-lg px-5 ">
                   last update: {data.date}
                 </div>
-                {close_chart && <div className="my-10">{close_chart}</div>}
+                {close_chart && <div className="my-10 mx-5">{close_chart}</div>}
               </div>
               <div className=" rounded-lg px-5">
                 <div className="font-medium text-xl mb-2">5 days</div>

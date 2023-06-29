@@ -40,8 +40,8 @@ const CryptoChart = (datachart: any) => {
           data={datachart.datachart}
           margin={{
             top: 5,
-            right: 30,
-            left: 20,
+            right: 5,
+            left: 2,
             bottom: 5,
           }}
           accessibilityLayer={true}
@@ -73,7 +73,9 @@ const CryptoChart = (datachart: any) => {
           <Line type="monotone" dataKey="Close" stroke="yellow" strokeWidth={2} dot={false} />
         </LineChart>
       </ResponsiveContainer>
+
     </>
+
   );
 };
 
