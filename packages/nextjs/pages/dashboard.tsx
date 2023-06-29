@@ -244,10 +244,12 @@ const Dashboard: NextPage = () => {
   useEffect(() => {
     const checkValidSubscription = async () => {
       const isValid = await fetchIsValidSubscription();
+      setIsValidSubscription(isValid);
       return isValid;
     };
     checkValidSubscription();
-  }, [address, signer]);
+
+  }, [address, signer, provider]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -306,10 +308,11 @@ const Dashboard: NextPage = () => {
     }
   };
 
-  return (
-    <div >
-      {!isValidSubscription ? (
-        <div className="mx-auto shadow-lg rounded-xl dark:bg-transparent border-2 border-gray-300  text-center space-y-6  ">
+  const subscriptionBox = () => {
+
+    return (
+      <>
+        <div className="mt-20 p-5 mx-auto shadow-lg rounded-xl dark:bg-transparent border-2 border-gray-300  text-center space-y-6  ">
           <h2 className="text-2xl font-semibold">Access Limited</h2>
           <p className="text-lg">Your access to the forecast service is currently restricted.</p>
           <p className="text-md">Subscribe to unlock the full dashboard functionality.</p>
@@ -335,12 +338,21 @@ const Dashboard: NextPage = () => {
             </button>
           </div>
         </div>
+      </>
+    );
+
+  };
+
+  return (
+    <div >
+      {!isValidSubscription ? (
+        subscriptionBox()
       ) : null}
       <div className="font-semibold my-5">**Data is fetched every 4 hours.</div>
       <br />
       <div>
-        {data ? (
-          <div className={blurOn}>
+        {isValidSubscription && signer && provider ? (
+          <div >
             <div className="">
               <div className="text-6xl font-bold mb-5 px-5">CHARTS</div>
               <div className="dark:dark:bg-trasparent">
