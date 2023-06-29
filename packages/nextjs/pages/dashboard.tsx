@@ -311,7 +311,7 @@ const Dashboard: NextPage = () => {
 
 
   return (
-    <div className="flex items-baseline pt-10 flex-grow flex-col w-auto mx-auto">
+    <div >
       {!isValidSubscription ? (
         <div className="card mx-auto shadow-lg rounded-xl dark:bg-transparent border-2 border-gray-300 p-5 text-center space-y-6">
           <h2 className="text-2xl font-semibold">Access Limited</h2>
@@ -333,27 +333,27 @@ const Dashboard: NextPage = () => {
           </div>
         </div>
       ) : null}
-
-
       <div className="font-semibold my-5">**Data is fetched every 4 hours.</div>
       <br />
       {data ? (
         <div className={blurOn}>
-          <div className="leading-tight">
+          <div className="sm:w-screen-sm lg:min-w-screen-lg md:min-w-screen-md xl:min-w-screen-xl 2xl:w-screen-2xl">
             <div className="text-6xl font-bold mb-5 px-5">CHARTS</div>
+
             <div className="dark:dark:bg-trasparent">
               <CryptoChart datachart={datachart} />
             </div>
+
             <div className="text-6xl font-bold my-10 px-5">SIGNAL</div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 my-5 text-left dark:dark:bg-transparent rounded-md text-transparent-content">
-              <div className="min-w-min">
+              <div className="max-w-min">
                 <h1 className="text-4xl font-semibold mb-4 px-5">
                   BTC-USD {data && <span className="font-medium text-lg"></span>}
                 </h1>
                 <div className=" rounded-lg px-5 ">
                   last update: {data.date}
                 </div>
-                {close_chart && <div className="my-10 mx-5">{close_chart}</div>}
+                {close_chart && <div className="image-full imga w-screen">{close_chart}</div>}
               </div>
               <div className=" rounded-lg px-5">
                 <div className="font-medium text-xl mb-2">5 days</div>
@@ -430,7 +430,7 @@ const Dashboard: NextPage = () => {
                     <p>Signal: {resultSignal(data.linear_regression_signal)}</p>
                   </div>
                 )}
-                {regression_chart && <div className="my-10">{regression_chart}</div>}
+                {regression_chart && <div className="image-full w-screen-min">{regression_chart}</div>}
               </div>
 
               <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
@@ -443,7 +443,7 @@ const Dashboard: NextPage = () => {
                     <p>Signal: {resultSignal(data.regr_signal)}</p>
                   </div>
                 )}
-                {regr_chart && <div className="my-10">{regr_chart}</div>}
+                {regr_chart && <div className="image-full w-screen-min">{regr_chart}</div>}
               </div>
 
               <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
@@ -456,7 +456,7 @@ const Dashboard: NextPage = () => {
                     <p>Signal: {resultSignal(data.autoselect_signal)}</p>
                   </div>
                 )}
-                {autoselect_chart && <div className="my-10">{autoselect_chart}</div>}
+                {autoselect_chart && <div className="image-full w-screen-min">{autoselect_chart}</div>}
               </div>
 
               <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
@@ -482,7 +482,7 @@ const Dashboard: NextPage = () => {
                     <p>Signal: {resultSignal(data.rnn_signal)}</p>
                   </div>
                 )}
-                {rnn_chart && <div className="my-10">{rnn_chart}</div>}
+                {rnn_chart && <div className="image-full w-screen-min">{rnn_chart}</div>}
               </div>
 
               <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
@@ -495,7 +495,7 @@ const Dashboard: NextPage = () => {
                     <p>{resultSignal(data.nbeats_signal)}</p>
                   </div>
                 )}
-                {nbeats_chart && <div className="my-10">{nbeats_chart}</div>}
+                {nbeats_chart && <div className="image-full w-screen-min">{nbeats_chart}</div>}
               </div>
 
               <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
@@ -508,7 +508,7 @@ const Dashboard: NextPage = () => {
                     <p>Signal: {resultSignal(data.tcn_signal)}</p>
                   </div>
                 )}
-                {tcn_chart && <div className="my-10">{tcn_chart}</div>}
+                {tcn_chart && <div className="image-full w-screen-min">{tcn_chart}</div>}
               </div>
 
               <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
@@ -521,7 +521,7 @@ const Dashboard: NextPage = () => {
                     <p>Signal: {resultSignal(data.trans_signal)}</p>
                   </div>
                 )}
-                {trans_chart && <div className="my-10">{trans_chart}</div>}
+                {trans_chart && <div className="image-full w-screen-min">{trans_chart}</div>}
               </div>
 
               <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
@@ -534,7 +534,7 @@ const Dashboard: NextPage = () => {
                     <p>Signal: {resultSignal(data.theta_signal)}</p>
                   </div>
                 )}
-                {theta_chart && <div className="my-10">{theta_chart}</div>}
+                {theta_chart && <div className="image-full w-screen-min">{theta_chart}</div>}
               </div>
 
               <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
@@ -547,7 +547,7 @@ const Dashboard: NextPage = () => {
                     <p>Signal: {resultSignal(data.tft_signal)}</p>
                   </div>
                 )}
-                {tft_chart && <div className="my-10">{tft_chart}</div>}
+                {tft_chart && <div className="image-full w-screen-min">{tft_chart}</div>}
               </div>
 
               <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
@@ -560,9 +560,9 @@ const Dashboard: NextPage = () => {
                   </div>
                 )}
                 <div className="my-10">
-                  {brnn0_chart && <div className="my-10">{brnn0_chart}</div>}
-                  {brnn1_chart && <div className="my-10">{brnn1_chart}</div>}
-                  {brnn2_chart && <div className="my-10">{brnn2_chart}</div>}
+                  {brnn0_chart && <div className="image-full w-screen-min">{brnn0_chart}</div>}
+                  {brnn1_chart && <div className="image-full w-screen-min">{brnn1_chart}</div>}
+                  {brnn2_chart && <div className="image-full w-screen-min">{brnn2_chart}</div>}
                 </div>
               </div>
 
@@ -576,9 +576,9 @@ const Dashboard: NextPage = () => {
                   </div>
                 )}
                 <div className="my-10">
-                  {anom0_chart && <div className="my-10">{anom0_chart}</div>}
-                  {anom1_chart && <div className="my-10">{anom1_chart}</div>}
-                  {anom2_chart && <div className="my-10">{anom2_chart}</div>}
+                  {anom0_chart && <div className="image-full w-screen-min">{anom0_chart}</div>}
+                  {anom1_chart && <div className="image-full w-screen-min">{anom1_chart}</div>}
+                  {anom2_chart && <div className="image-full w-screen-min">{anom2_chart}</div>}
                 </div>
               </div>
 
@@ -593,7 +593,7 @@ const Dashboard: NextPage = () => {
                     <p>Signal: {resultSignal(data.nhits_signal)}</p>
                   </div>
                 )}
-                {nhits_chart && <div className="my-10">{nhits_chart}</div>}
+                {nhits_chart && <div className="image-full w-screen-min">{nhits_chart}</div>}
               </div>
             </div>
             <div className="text-6xl font-bold my-10 mx-5 ">TECHNICAL ANALYSIS</div>

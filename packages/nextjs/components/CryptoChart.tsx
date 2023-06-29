@@ -35,17 +35,17 @@ const CryptoChart = (datachart: any) => {
 
   return (
     <>
-      <ResponsiveContainer width="100%" height={500} className={"rounded-lg mx-auto "}>
+
+      <ResponsiveContainer width="100%" height={500}>
         <LineChart
           data={datachart.datachart}
           margin={{
-            top: 5,
+            top: 2,
             right: 5,
-            left: 2,
-            bottom: 5,
+            left: 5,
+            bottom: 2,
           }}
           accessibilityLayer={true}
-          className="py-auto"
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="Date" domain={["auto", "auto"]} />
