@@ -1,10 +1,7 @@
 import { ethers } from "ethers";
 import ky from "ky";
 
-const ORACLE_ABI = [
-  "function lastUpdated() external view returns(uint256)",
-  "function updatePrice(uint256)",
-];
+const ORACLE_ABI = ["function lastUpdated() external view returns(uint256)", "function updatePrice(uint256)"];
 
 const oracleAddress = "0x71B9B0F6C999CBbB0FeF9c92B80D54e4973214da"; // replace with real address
 

@@ -4,9 +4,9 @@ import { ethers } from "ethers";
 import { formatEther } from "ethers/lib/utils.js";
 import type { NextPage } from "next";
 import { useAccount, useProvider, useSigner } from "wagmi";
+import { resourceLimits } from "worker_threads";
 import CryptoChart from "~~/components/CryptoChart";
 import { useTransactor } from "~~/hooks/scaffold-eth";
-import { resourceLimits } from "worker_threads";
 
 const Dashboard: NextPage = () => {
   const [data, setData]: any = useState<any>();
@@ -66,9 +66,7 @@ const Dashboard: NextPage = () => {
 
   const subscribe = async () => {
     if (tiersContract) {
-      const result = txData(
-        tiersContract?.subscribe({ value: fee })
-      );
+      const result = txData(tiersContract?.subscribe({ value: fee }));
       return result;
     }
   };
@@ -100,7 +98,6 @@ const Dashboard: NextPage = () => {
   };
 
   const fetchApiHistory = async () => {
-
     const url = process.env.NEXT_PUBLIC_API_URL + "data_history/";
     try {
       const response = await fetch(url, {
@@ -280,40 +277,39 @@ const Dashboard: NextPage = () => {
     getImages();
   }, []);
 
-
   // Create a component with a button with a "sell" text inside
   const resultSignal = (signal: string) => {
     if (signal == "BUY") {
       return (
         <>
-          <button className="text-green-300 bg-green-600 px-2 rounded-md text-sm font-medium">
+          <button className="h-8 text-green-300 bg-green-600 px-2 rounded-md text-md  font-medium my-5">
             {signal}
           </button>
-        </>)
+        </>
+      );
     } else if (signal == "SELL") {
       return (
         <>
-          <button className="text-red-300 bg-red-600 px-2 rounded-md text-sm font-medium">
+          <button className=" h-8 text-red-300 bg-red-600 px-2 rounded-md text-md  font-medium my-5">
             {signal}
           </button>
         </>
-      )
+      );
     } else if (signal == "NEUTRAL") {
       return (
         <>
-          <button className="text-yellow-300 bg-yellow-600 px-2 rounded-md text-sm font-medium">
+          <button className=" h-8 text-yellow-300 bg-yellow-600 px-2 rounded-md text-md  font-medium my-5">
             {signal}
           </button>
         </>
-      )
+      );
     }
   };
-
 
   return (
     <div >
       {!isValidSubscription ? (
-        <div className="card mx-auto shadow-lg rounded-xl dark:bg-transparent border-2 border-gray-300 p-5 text-center space-y-6">
+        <div className="mx-auto shadow-lg rounded-xl dark:bg-transparent border-2 border-gray-300  text-center space-y-6  ">
           <h2 className="text-2xl font-semibold">Access Limited</h2>
           <p className="text-lg">Your access to the forecast service is currently restricted.</p>
           <p className="text-md">Subscribe to unlock the full dashboard functionality.</p>
@@ -322,12 +318,19 @@ const Dashboard: NextPage = () => {
             <span className="text-md font-medium text-red-500">* Only for this month *</span>
           </div>
           <div className="mt-2">
-            <a className="btn btn-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" href={tiersUrl}>
+            <a
+              className="btn btn-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              href={tiersUrl}
+            >
               Subscription Page
             </a>
           </div>
           <div className="mt-2">
-            <button className="btn btn-secondary bg-gray-300 hover:bg-gray-500 text-gray-800 font-semibold py-2 px-4 rounded-full" disabled={String(isValidSubscription) === "true"} onClick={subscribe}>
+            <button
+              className="btn btn-secondary bg-gray-300 hover:bg-gray-500 text-gray-800 font-semibold py-2 px-4 rounded-full"
+              disabled={String(isValidSubscription) === "true"}
+              onClick={subscribe}
+            >
               Subscribe
             </button>
           </div>
@@ -335,467 +338,439 @@ const Dashboard: NextPage = () => {
       ) : null}
       <div className="font-semibold my-5">**Data is fetched every 4 hours.</div>
       <br />
-      {data ? (
-        <div className={blurOn}>
-          <div className="sm:w-screen-sm lg:min-w-screen-lg md:min-w-screen-md xl:min-w-screen-xl 2xl:w-screen-2xl">
-            <div className="text-6xl font-bold mb-5 px-5">CHARTS</div>
-
-            <div className="dark:dark:bg-trasparent">
-              <CryptoChart datachart={datachart} />
-            </div>
-
-            <div className="text-6xl font-bold my-10 px-5">SIGNAL</div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 my-5 text-left dark:dark:bg-transparent rounded-md text-transparent-content">
-              <div className="max-w-min">
-                <h1 className="text-4xl font-semibold mb-4 px-5">
-                  BTC-USD {data && <span className="font-medium text-lg"></span>}
-                </h1>
-                <div className=" rounded-lg px-5 ">
-                  last update: {data.date}
+      <div>
+        {data ? (
+          <div className={blurOn}>
+            <div className="">
+              <div className="text-6xl font-bold mb-5 px-5">CHARTS</div>
+              <div className="dark:dark:bg-trasparent">
+                <CryptoChart datachart={datachart} />
+              </div>
+              <div className="text-6xl font-bold my-10 px-5">SIGNAL</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 my-5 text-left dark:dark:bg-transparent rounded-md text-transparent-content">
+                <div className="max-w-min">
+                  <h1 className="text-4xl font-semibold mb-4 px-5">
+                    BTC-USD {data && <span className="font-medium text-lg"></span>}
+                  </h1>
+                  <div className=" text-medium px-5 mb-5">last update: {data.date}</div>
+                  {close_chart && <div className="image-full imga w-screen">{close_chart}</div>}
                 </div>
-                {close_chart && <div className="image-full imga w-screen">{close_chart}</div>}
-              </div>
-              <div className=" rounded-lg px-5">
-                <div className="font-medium text-xl mb-2">5 days</div>
-                <div className="text-3xl leading-relaxed text-left font-medium">
-                  <div className="mb-2">
-                    Last: <strong>${data?.close_price ? Number(data.close_price).toFixed(2) : null}</strong>
+                <div className=" rounded-lg px-5">
+                  <div className="font-medium text-2xl mb-5">5 days</div>
+                  <div className="text-xl leading-relaxed text-left font-medium">
+                    <div className="text-md font-thin">LAST</div>
+                    <div className="mb-2">
+                      <strong>${data?.close_price ? Number(data.close_price).toFixed(2) : null}</strong>
+                    </div>
+                    <div className="text-md font-thin">FUTURE</div>
+                    <div className="mb-2">
+                      <strong>${data[String(data["selected model"]) + "_predicted_5D"]}</strong>
+                    </div>
+                    <div className="text-md font-thin">ALGO</div>
+                    <div className="mb-2">
+                      <strong>{data["selected model"]}</strong>
+                    </div>
+                    <div className="text-md font-thin">SIGNAL</div>
+                    <div className="">
+                      <strong>{resultSignal(data["prediction signal"])}</strong>
+                    </div>
                   </div>
-                  <div className="mb-2">
-                    Future: <strong>${data[String(data["selected model"]) + "_predicted_5D"]}</strong>
-                  </div>
-                  <div className="mb-2">
-                    Model: <strong>{data["selected model"]}</strong>
-                  </div>
-                  <div className="mb-2">
-                    Signal: <strong>{resultSignal(data["prediction signal"])}</strong>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div className="text-6xl font-bold my-20 mx-5">LAST SIGNAL</div>
-            <div className="overflow-x-auto w-screen md:max-w-md lg:max-w-lg xl:max-w-xl my-20">
-              <table className="table-compact">
-                <thead>
-                  <tr className="bg-neutral text-primary-content">
-                    <th className="py-2 px-4 border-b">Date</th>
-                    <th className="py-2 px-4 border-b">Prediction Signal</th>
-                    <th className="py-2 px-4 border-b">Selected Model</th>
-                    <th className="py-2 px-4 border-b">MAPE</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {dataHistory &&
-                    dataHistory.map(
-                      (
-                        item: {
-                          [x: string]: any;
-                          date:
-                          | string
-                          | number
-                          | boolean
-                          | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-                          | React.ReactFragment
-                          | React.ReactPortal
-                          | null
-                          | undefined;
-                        },
-                        index: React.Key | null | undefined,
-                      ) => (
-                        <tr key={index} className=" bg-trasparent">
-                          <td className="py-2 px-4 border-b">{item.date}</td>
-                          <td className="py-2 px-4 border-b">{resultSignal(item["prediction signal"])}</td>
-                          <td className="py-2 px-4 border-b">{item["selected model"]}</td>
-                          <td className="py-2 px-4 border-b">{item[String(item["selected model"]) + "_MAPE"]}%</td>
-                        </tr>
-                      ),
-                    )}
-                </tbody>
-              </table>
-            </div>
-            <div className="text-6xl font-bold my-10 mx-5">FORECASTS</div>
-            <div className="text-md font-thin my-10 mx-5">MAPE: Mean absolute percentage error
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 my-auto mb-10 dark:dark:bg-transparent text-transparent-content ">
-
-              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
-                <div className="text-2xl font-bold">LINEAR REGRESSION</div>
-
-                {data && (
-                  <div className="text-lg font-medium mt-4">
-                    <p>Predicted: {Number(data.linear_regression_predicted_5D).toFixed(2)}</p>
-                    <p>MAPE: {Number(data.linear_regression_MAPE).toFixed(2)}%</p>
-                    <p>Signal: {resultSignal(data.linear_regression_signal)}</p>
-                  </div>
-                )}
-                {regression_chart && <div className="image-full w-screen-min">{regression_chart}</div>}
-              </div>
-
-              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
-                <div className="text-2xl font-bold">REGRESSION</div>
-                Regression Forecasting
-                {data && (
-                  <div className="text-lg font-medium mt-4">
-                    <p>Predicted: {Number(data.regr_predicted_5D).toFixed(2)}</p>
-                    <p>MAPE: {Number(data.regr_MAPE).toFixed(2)}%</p>
-                    <p>Signal: {resultSignal(data.regr_signal)}</p>
-                  </div>
-                )}
-                {regr_chart && <div className="image-full w-screen-min">{regr_chart}</div>}
-              </div>
-
-              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
-                <div className="text-2xl font-bold">AUTOSELECT</div>
-                Automatic Statistical forecasting
-                {data && (
-                  <div className="text-lg font-medium mt-4">
-                    <p>Predicted: {Number(data.autoselect_predicted_5D).toFixed(2)}</p>
-                    <p>MAPE: {Number(data.autoselect_MAPE).toFixed(2)}%</p>
-                    <p>Signal: {resultSignal(data.autoselect_signal)}</p>
-                  </div>
-                )}
-                {autoselect_chart && <div className="image-full w-screen-min">{autoselect_chart}</div>}
-              </div>
-
-              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
-                <div className="text-2xl font-bold">AUTOSELECT EMA 5</div>
-                Automatic Statistical forecasting based on EMA 5
-                {data && (
-                  <div className="text-lg font-medium mt-4">
-                    <p>Predicted: {Number(data.autoselect_ema_predicted_5D).toFixed(2)}</p>
-                    <p>MAPE: {Number(data.autoselect_ema_MAPE).toFixed(2)}%</p>
-                    <p>Signal: {resultSignal(data.autoselect_ema_signal)}</p>
-                  </div>
-                )}
-                {autoselect_ema_chart && <div className="my-10">{autoselect_ema_chart}</div>}
-              </div>
-
-              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
-                <div className="text-2xl font-bold">RNN</div>
-                RNN forecasting
-                {data && (
-                  <div className="text-lg font-medium mt-4">
-                    <p>Predicted: {Number(data.rnn_predicted_5D).toFixed(2)}</p>
-                    <p>MAPE: {Number(data.rnn_MAPE).toFixed(2)}%</p>
-                    <p>Signal: {resultSignal(data.rnn_signal)}</p>
-                  </div>
-                )}
-                {rnn_chart && <div className="image-full w-screen-min">{rnn_chart}</div>}
-              </div>
-
-              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
-                <div className="text-2xl font-bold">NBEATS</div>
-                NBEATS Forecasting
-                {data && (
-                  <div className="text-lg font-medium mt-4">
-                    <p>Predicted: {Number(data.nbeats_predicted_5D).toFixed(2)}</p>
-                    <p>MAPE: {Number(data.nbeats_MAPE).toFixed(2)}%</p>
-                    <p>{resultSignal(data.nbeats_signal)}</p>
-                  </div>
-                )}
-                {nbeats_chart && <div className="image-full w-screen-min">{nbeats_chart}</div>}
-              </div>
-
-              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
-                <div className="text-2xl font-bold">TCN</div>
-                TCN forecasting
-                {data && (
-                  <div className="text-lg font-medium mt-4">
-                    <p>Predicted: {Number(data.tcn_predicted_5D).toFixed(2)}</p>
-                    <p>MAPE: {Number(data.tcn_MAPE).toFixed(2)}%</p>
-                    <p>Signal: {resultSignal(data.tcn_signal)}</p>
-                  </div>
-                )}
-                {tcn_chart && <div className="image-full w-screen-min">{tcn_chart}</div>}
-              </div>
-
-              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
-                <div className="text-2xl font-bold">TRANS</div>
-                Transformer forecasting
-                {data && (
-                  <div className="text-lg font-medium mt-4">
-                    <p>Predicted: {Number(data.trans_predicted_5D).toFixed(2)}</p>
-                    <p>MAPE: {Number(data.trans_MAPE).toFixed(2)}%</p>
-                    <p>Signal: {resultSignal(data.trans_signal)}</p>
-                  </div>
-                )}
-                {trans_chart && <div className="image-full w-screen-min">{trans_chart}</div>}
-              </div>
-
-              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
-                <div className="text-2xl font-bold">THETA</div>
-                Theta forecasting
-                {data && (
-                  <div className="text-lg font-medium mt-4">
-                    <p>Predicted: {Number(data.theta_predicted_5D).toFixed(2)}</p>
-                    <p>MAPE: {Number(data.theta_MAPE).toFixed(2)}%</p>
-                    <p>Signal: {resultSignal(data.theta_signal)}</p>
-                  </div>
-                )}
-                {theta_chart && <div className="image-full w-screen-min">{theta_chart}</div>}
-              </div>
-
-              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
-                <div className="text-2xl font-bold">TFT</div>
-                Temporal Fusion Transformer forecasting
-                {data && (
-                  <div className="text-lg font-medium mt-4">
-                    <p>Predicted: {Number(data.tft_predicted_5D).toFixed(2)}</p>
-                    <p>MAPE: {Number(data.tft_MAPE).toFixed(2)}%</p>
-                    <p>Signal: {resultSignal(data.tft_signal)}</p>
-                  </div>
-                )}
-                {tft_chart && <div className="image-full w-screen-min">{tft_chart}</div>}
-              </div>
-
-              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
-                <div className="text-2xl font-bold">BRNN</div>
-                Block RNN forecasting
-                {data && (
-                  <div className="text-lg font-medium mt-4">
-                    <p>Prediction: {Number(data.brnn_predicted_5D).toFixed(2)}</p>
-                    <p>Signal: {resultSignal(data.brnn_signal)}</p>
-                  </div>
-                )}
-                <div className="my-10">
-                  {brnn0_chart && <div className="image-full w-screen-min">{brnn0_chart}</div>}
-                  {brnn1_chart && <div className="image-full w-screen-min">{brnn1_chart}</div>}
-                  {brnn2_chart && <div className="image-full w-screen-min">{brnn2_chart}</div>}
                 </div>
               </div>
+              <br />
+              <div className="text-6xl font-bold my-20 mx-5">LAST SIGNAL</div>
+              <div className="overflow-x-auto w-screen md:max-w-md lg:max-w-lg xl:max-w-xl my-20">
+                <table className="table-compact">
+                  <thead>
+                    <tr className="bg-neutral text-primary-content">
+                      <th className="py-2 px-4 border-b">Date</th>
+                      <th className="py-2 px-4 border-b">Prediction Signal</th>
+                      <th className="py-2 px-4 border-b">Selected Model</th>
+                      <th className="py-2 px-4 border-b">MAPE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dataHistory &&
+                      dataHistory.map(
+                        (
+                          item: {
+                            [x: string]: any;
+                            date:
+                            | string
+                            | number
+                            | boolean
+                            | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+                            | React.ReactFragment
+                            | React.ReactPortal
+                            | null
+                            | undefined;
+                          },
+                          index: React.Key | null | undefined,
+                        ) => (
+                          <tr key={index} className=" bg-trasparent">
+                            <td className="py-2 px-4 border-b">{item.date}</td>
+                            <td className="py-2 px-4 border-b">{resultSignal(item["prediction signal"])}</td>
+                            <td className="py-2 px-4 border-b">{item["selected model"]}</td>
+                            <td className="py-2 px-4 border-b">{item[String(item["selected model"]) + "_MAPE"]}%</td>
+                          </tr>
+                        ),
+                      )}
+                  </tbody>
+                </table>
+              </div>
+              <div className="text-6xl font-bold my-10 mx-5">FORECASTS</div>
+              <div className="text-md font-medium my-10 mx-5">MAPE: Mean absolute percentage error</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-2 my-auto mb-10 dark:dark:bg-transparent text-transparent-content ">
+                <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
+                  <div className="text-2xl font-bold">LINEAR REGRESSION</div>
+                  Logistic Regression Forecasting
+                  {data && (
+                    <div className="text-lg font-medium mt-4">
+                      <p>
+                        <div className="text-md font-thin">PREDICTED</div>
+                        {Number(data.linear_regression_predicted_5D).toFixed(2)}
+                      </p>
+                      <p>
+                        <div className="text-md font-thin">MAPE</div>
+                        {Number(data.linear_regression_MAPE).toFixed(2)}%
+                      </p>
+                      <p>
+                        <div className="text-md font-thin">SIGNAL</div>
+                        {resultSignal(data.linear_regression_signal)}
+                      </p>
+                    </div>
+                  )}
+                  {regression_chart && <div className="image-full w-screen-min mt-5">{regression_chart}</div>}
+                </div>
 
-              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
-                <div className="text-2xl font-bold">ANOM</div>
-                Quantile Anomaly Detection Data
-                {data && (
-                  <div className="text-lg font-medium mt-4">
-                    <p>Prediction: {Number(data.anom_predicted_5D).toFixed(2)}</p>
-                    <p>Signal: {resultSignal(data.signal_anom)}</p>
+                <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
+                  <div className="text-2xl font-bold">REGRESSION</div>
+                  Regression Forecasting
+                  {data && (
+                    <div className="text-lg font-medium mt-4">
+                      <p>
+                        <div className="text-md font-thin ">PREDICTED</div>
+                        {Number(data.regr_predicted_5D).toFixed(2)}
+                      </p>
+                      <p>
+                        <div className="text-md font-thin">MAPE</div> {Number(data.regr_MAPE).toFixed(2)}%
+                      </p>
+                      <p>
+                        <div className="text-md font-thin">SIGNAL</div>
+                        {resultSignal(data.regr_signal)}
+                      </p>
+                    </div>
+                  )}
+                  {regr_chart && <div className="image-full w-screen-min mt-5">{regr_chart}</div>}
+                </div>
+
+                <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
+                  <div className="text-2xl font-bold">AUTOSELECT</div>
+                  Automatic Statistical forecasting
+                  {data && (
+                    <div className="text-lg font-medium mt-4">
+                      <p>
+                        <div className="text-md font-thin ">PREDICTED</div>
+                        {Number(data.autoselect_predicted_5D).toFixed(2)}
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">MAPE</div>
+                        {Number(data.autoselect_MAPE).toFixed(2)}%
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">SIGNAL</div> {resultSignal(data.autoselect_signal)}
+                      </p>
+                    </div>
+                  )}
+                  {autoselect_chart && <div className="image-full w-screen-min mt-5">{autoselect_chart}</div>}
+                </div>
+
+                <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
+                  <div className="text-2xl font-bold">AUTOSELECT EMA5</div>
+                  Automatic Statistical forecasting based on EMA5
+                  {data && (
+                    <div className="text-lg font-medium mt-4">
+                      <p>
+                        <div className="text-md font-thin ">PREDICTED</div>{" "}
+                        {Number(data.autoselect_ema_predicted_5D).toFixed(2)}
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">MAPE</div> {Number(data.autoselect_ema_MAPE).toFixed(2)}%
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">SIGNAL</div>
+                        {resultSignal(data.autoselect_ema_signal)}
+                      </p>
+                    </div>
+                  )}
+                  {autoselect_ema_chart && <div className="image-full w-screen-min mt-5">{autoselect_ema_chart}</div>}
+                </div>
+
+                <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
+                  <div className="text-2xl font-bold">RNN</div>
+                  RNN forecasting
+                  {data && (
+                    <div className="text-lg font-medium mt-4">
+                      <p>
+                        <div className="text-md font-thin ">PREDICTED</div>
+                        {Number(data.rnn_predicted_5D).toFixed(2)}
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">MAPE</div>
+                        {Number(data.rnn_MAPE).toFixed(2)}%
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">SIGNAL</div>
+                        {resultSignal(data.rnn_signal)}
+                      </p>
+                    </div>
+                  )}
+                  {rnn_chart && <div className="image-full w-screen-min mt-5">{rnn_chart}</div>}
+                </div>
+
+                <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
+                  <div className="text-2xl font-bold">NBEATS</div>
+                  NBEATS Forecasting
+                  {data && (
+                    <div className="text-lg font-medium mt-4">
+                      <p>
+                        <div className="text-md font-thin ">PREDICTED</div>
+                        {Number(data.nbeats_predicted_5D).toFixed(2)}
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">MAPE</div>
+                        {Number(data.nbeats_MAPE).toFixed(2)}%
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">SIGNAL</div>
+                        {resultSignal(data.nbeats_signal)}
+                      </p>
+                    </div>
+                  )}
+                  {nbeats_chart && <div className="image-full w-screen-min mt-5">{nbeats_chart}</div>}
+                </div>
+
+                <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
+                  <div className="text-2xl font-bold">TCN</div>
+                  TCN forecasting
+                  {data && (
+                    <div className="text-lg font-medium mt-4">
+                      <p>
+                        <div className="text-md font-thin ">PREDICTED</div>
+                        {Number(data.tcn_predicted_5D).toFixed(2)}
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">MAPE</div>
+                        {Number(data.tcn_MAPE).toFixed(2)}%
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">SIGNAL</div>
+                        {resultSignal(data.tcn_signal)}
+                      </p>
+                    </div>
+                  )}
+                  {tcn_chart && <div className="image-full w-screen-min mt-5">{tcn_chart}</div>}
+                </div>
+
+                <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
+                  <div className="text-2xl font-bold">TRANS</div>
+                  Transformer forecasting
+                  {data && (
+                    <div className="text-lg font-medium mt-4">
+                      <p>
+                        <div className="text-md font-thin ">PREDICTED</div>
+                        {Number(data.trans_predicted_5D).toFixed(2)}
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">MAPE</div>
+                        {Number(data.trans_MAPE).toFixed(2)}%
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">SIGNAL</div>
+                        {resultSignal(data.trans_signal)}
+                      </p>
+                    </div>
+                  )}
+                  {trans_chart && <div className="image-full w-screen-min mt-5">{trans_chart}</div>}
+                </div>
+
+                <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
+                  <div className="text-2xl font-bold">THETA</div>
+                  Theta forecasting
+                  {data && (
+                    <div className="text-lg font-medium mt-4">
+                      <p>
+                        <div className="text-md font-thin ">PREDICTED</div>
+                        {Number(data.theta_predicted_5D).toFixed(2)}
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">MAPE</div>
+                        {Number(data.theta_MAPE).toFixed(2)}%
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">SIGNAL</div>
+                        {resultSignal(data.theta_signal)}
+                      </p>
+                    </div>
+                  )}
+                  {theta_chart && <div className="image-full w-screen-min mt-5">{theta_chart}</div>}
+                </div>
+
+                <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
+                  <div className="text-2xl font-bold">TFT</div>
+                  Temporal Fusion Transformer forecasting
+                  {data && (
+                    <div className="text-lg font-medium mt-4">
+                      <p>
+                        <div className="text-md font-thin ">PREDICTED</div>
+                        {Number(data.tft_predicted_5D).toFixed(2)}
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">MAPE</div>
+                        {Number(data.tft_MAPE).toFixed(2)}%
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">SIGNAL</div>
+                        {resultSignal(data.tft_signal)}
+                      </p>
+                    </div>
+                  )}
+                  {tft_chart && <div className="image-full w-screen-min mt-5">{tft_chart}</div>}
+                </div>
+
+                <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
+                  <div className="text-2xl font-bold">BRNN</div>
+                  Block RNN forecasting
+                  {data && (
+                    <div className="text-lg font-medium mt-4">
+                      <p>
+                        <div className="text-md font-thin ">PREDICTED</div>
+                        {Number(data.brnn_predicted_5D).toFixed(2)}
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">SIGNAL</div>
+                        {resultSignal(data.brnn_signal)}
+                      </p>
+                    </div>
+                  )}
+                  <div className="my-10">
+                    {brnn0_chart && <div className="image-full w-screen-min mt-5">{brnn0_chart}</div>}
+                    {brnn1_chart && <div className="image-full w-screen-min mt-5">{brnn1_chart}</div>}
+                    {brnn2_chart && <div className="image-full w-screen-min mt-5">{brnn2_chart}</div>}
                   </div>
-                )}
-                <div className="my-10">
-                  {anom0_chart && <div className="image-full w-screen-min">{anom0_chart}</div>}
-                  {anom1_chart && <div className="image-full w-screen-min">{anom1_chart}</div>}
-                  {anom2_chart && <div className="image-full w-screen-min">{anom2_chart}</div>}
+                </div>
+
+                <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
+                  <div className="text-2xl font-bold">ANOM</div>
+                  Quantile Anomaly Detection Data
+                  {data && (
+                    <div className="text-lg font-medium mt-4">
+                      <p>
+                        <div className="text-md font-thin ">PREDICTED</div>
+                        {Number(data.anom_predicted_5D).toFixed(2)}
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">SIGNAL</div>
+                        {resultSignal(data.signal_anom)}
+                      </p>
+                    </div>
+                  )}
+                  <div className="my-10">
+                    {anom0_chart && <div className="image-full w-screen-min mt-5">{anom0_chart}</div>}
+                    {anom1_chart && <div className="image-full w-screen-min mt-5">{anom1_chart}</div>}
+                    {anom2_chart && <div className="image-full w-screen-min mt-5">{anom2_chart}</div>}
+                  </div>
+                </div>
+
+                <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
+                  <div className="text-2xl font-bold">NHITS</div>
+                  Nhits forecasting
+                  {data && (
+                    <div className="text-lg font-medium mt-4">
+                      <p>
+                        <div className="text-md font-thin ">PREDICTED</div>
+                        {Number(data.nhits_predicted_5D).toFixed(2)}
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">MAPE</div>
+                        {Number(data.nhits_MAPE).toFixed(2)}%
+                      </p>
+                      <p>
+                        <div className="text-md font-thin ">SIGNAL</div>
+                        {resultSignal(data.nhits_signal)}
+                      </p>
+                    </div>
+                  )}
+                  {nhits_chart && <div className="image-full w-screen-min mt-5">{nhits_chart}</div>}
                 </div>
               </div>
+              <div className="text-6xl font-bold my-5 mx-5 ">TECHNICAL ANALYSIS</div>
+              <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-2 my-20">
+                <div className="my-2">
+                  {data && (
+                    <div className="w-screen">
+                      <table className="table-compact text-sm sm:text-lg font-medium w-72">
+                        <tbody>
+                          <tr>
+                            <td>TREND</td>
+                            <td>DELTA</td>
 
+                          </tr>
+                          <tr>
+                            <td>{resultSignal(data.trend_signal)}</td>
+                            <td>{resultSignal(data.signal_delta)}</td>
+                          </tr>
+                          <tr>
+                            <td>ATR</td>
+                            <td>ROC</td>
+                            <td>MOM</td>
+                          </tr>
+                          <tr>
+                            <td>{resultSignal(data.signal_atr)}</td>
+                            <td>{resultSignal(data.signal_roc)}</td>
+                            <td>{resultSignal(data.signal_momentum)}</td>
+                          </tr>
 
-              <div className="leading-tight bg-trasparent dark:bg-trasparent dark:text-trasparent-content rounded-md p-6 ">
-                <div className="text-2xl font-bold">NHITS</div>
-                Nhits forecasting
-                {data && (
-                  <div className="text-lg font-medium mt-4">
-                    <p>Predicted: {Number(data.nhits_predicted_5D).toFixed(2)}</p>
-                    <p>MAPE: {Number(data.nhits_MAPE).toFixed(2)}%</p>
-                    <p>Signal: {resultSignal(data.nhits_signal)}</p>
-                  </div>
-                )}
-                {nhits_chart && <div className="image-full w-screen-min">{nhits_chart}</div>}
+                          <tr>
+                            <td>RSI 10</td>
+                            <td>RSI 60</td>
+                            <td>STOCHRSI D</td>
+                            <td>STOCHRSI K</td>
+                          </tr>
+                          <tr>
+                            <td>{resultSignal(data.signal_RSI_10)}</td>
+                            <td>{resultSignal(data.signal_RSI_60)}</td>
+                            <td>{resultSignal(data["signal_STOCK_RSI_D"])}</td>
+                            <td>{resultSignal(data["signal_STOCK_RSI_K"])}</td>
+                          </tr>
+                          <tr>
+                            <td>EMA Cross 21/150</td>
+                            <td>RSI Cross 10/60</td>
+                            <td>STOCHRSI 20 Cross</td>
+                          </tr>
+                          <tr>
+                            <td>{resultSignal(data.signal_EMA)}</td>
+                            <td>{resultSignal(data.signal_RSI_CROSS)}</td>
+                            <td>{resultSignal(data["Signal_STOCK_CROSS"])}</td>
+                          </tr>
+                          {/* <tr>
+                        <td>{""}</td>
+                        <td>{Number(data.atr).toFixed(2)}</td>
+                        <td>{Number(data.roc).toFixed(2)}</td>
+                        <td>{Number(data.mom).toFixed(2)}</td>
+                        <td>{Number(data.delta).toFixed(6)}</td>
+                      </tr> */}
+                          <tr></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="text-6xl font-bold my-10 mx-5 ">TECHNICAL ANALYSIS</div>
-            <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-2 px-5 my-20">
-              <div className="my-2">
-                <div className="text-2xl font-bold mb-5">TREND FOLLOW</div>
-                {data && (
-                  <table className="table-compact text-lg font-medium ">
-                    <tbody>
-                      <tr>
-                        <td>TREND</td>
-                        <td>{resultSignal(data.trend_signal)}</td>
-                      </tr>
-
-                      <tr>
-                        <td>*********</td>
-                        <td>*********</td>
-
-                      </tr>
-
-                      <tr>
-                        <td>ATR</td>
-                        <td>{resultSignal(data.signal_atr)}</td>
-                      </tr>
-                      <td>{Number(data.atr).toFixed(2)}</td>
-
-
-                      <tr>
-                        <td>*********</td>
-                        <td>*********</td>
-
-                      </tr>
-
-                      <tr>
-                        <td>ROC</td>
-                        <td>{resultSignal(data.signal_roc)}</td>
-
-                      </tr>
-                      <td>{Number(data.roc).toFixed(2)}</td>
-
-
-                      <tr>
-                        <td>*********</td>
-                        <td>*********</td>
-
-                      </tr>
-
-
-                      <tr>
-                        <td>MOM</td>
-                        <td>{resultSignal(data.signal_momentum)}</td>
-
-                      </tr>
-                      <td>{Number(data.mom).toFixed(2)}</td>
-
-                      <tr>
-                        <td>*********</td>
-                        <td>*********</td>
-
-                      </tr>
-
-                      <tr>
-                        <td>DELTA</td>
-                        <td>{resultSignal(data.signal_delta)}</td>
-
-                      </tr>
-                      <td>{Number(data.delta).toFixed(6)}</td>
-
-                    </tbody>
-                  </table>
-                )}
-              </div>
-              <div className="my-2">
-                <div className="text-2xl font-bold mb-5">EMA 21/150</div>
-                {data && (
-                  <table className="table-compact text-lg font-medium ">
-                    <tbody>
-                      <tr>
-                        <td>EMA Cross</td>
-                        <td>{resultSignal(data.signal_EMA)}</td>
-                      </tr>
-                      <tr>
-                        <td>*********</td>
-                        <td>*********</td>
-
-                      </tr>
-                      <tr>
-                        <td>EMA150</td>
-                        <td>{Number(data.ema_150).toFixed(2)}</td>
-                      </tr>
-                      <tr>
-                        <td>*********</td>
-                        <td>*********</td>
-
-                      </tr>
-                      <tr>
-                        <td>EMA50</td>
-                        <td>{Number(data.ema_50).toFixed(2)}</td>
-                      </tr>
-                      <tr>
-                        <td>*********</td>
-                        <td>*********</td>
-
-                      </tr>
-
-                      <tr>
-                        <td>EMA21</td>
-                        <td>{Number(data.EMA_21).toFixed(2)}</td>
-                      </tr>
-                      <tr>
-                        <td>*********</td>
-                        <td>*********</td>
-
-                      </tr>
-                      <tr>
-                        <td>EMA5</td>
-                        <td>{Number(data.ema_5).toFixed(2)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                )}
-              </div>
-
-              <div className="my-5">
-                <div className="text-2xl font-bold mb-5">RSI 10/60</div>
-                {data && (
-                  <table className="table-compact text-lg font-medium">
-                    <tbody>
-                      <tr>
-                        <td>RSI Cross</td>
-                        <td>{resultSignal(data.signal_RSI_CROSS)}</td>
-                      </tr>
-                      <tr>
-                        <td>*********</td>
-                        <td>*********</td>
-
-                      </tr>
-                      <tr>
-                        <td>RSI10</td>
-                        <td>{resultSignal(data.signal_RSI_10)}</td>
-                      </tr>
-                      <tr>
-                        <td>{Number(data.rsi_10).toFixed(0)}</td>
-                      </tr>
-                      <tr>
-                        <td>*********</td>
-                        <td>*********</td>
-
-                      </tr>
-                      <tr>
-                        <td>RSI60</td>
-                        <td>{resultSignal(data.signal_RSI_60)}</td>
-                      </tr>
-                      <tr>
-                        <td>{Number(data.rsi_60).toFixed(0)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                )}
-              </div>
-              <div className="my-5">
-                <div className="text-2xl font-bold mb-5">STOCHRSI</div>
-                {data && (
-                  <table className="table-compact text-lg font-medium">
-                    <tbody>
-                      <tr>
-                        <td>Cross StocRSI</td>
-                        <td>{resultSignal(data["Signal_STOCK_CROSS"])}</td>
-                      </tr>
-                      <tr>
-                        <td>*********</td>
-                        <td>*********</td>
-
-                      </tr>
-                      <tr>
-                        <td>D</td>
-                        <td>{resultSignal(data["signal_STOCK_RSI_D"])}</td>
-                      </tr>
-                      <tr>
-                        <td>{Number(data.stochastic_20D).toFixed(0)}</td>
-                      </tr>
-                      <tr>
-                        <td>*********</td>
-                        <td>*********</td>
-
-                      </tr>
-                      <tr>
-                        <td>K</td>
-                        <td>{resultSignal(data["signal_STOCK_RSI_K"])}</td>
-                      </tr>
-                      <tr>
-                        <td>{Number(data.stochastic_20K).toFixed(0)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                )}
-              </div>
-
             </div>
           </div>
-        </div>
-      ) : null}
+        ) : null}
+      </div>
     </div>
   );
 };

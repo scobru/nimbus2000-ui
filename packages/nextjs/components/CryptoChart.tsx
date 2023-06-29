@@ -35,7 +35,6 @@ const CryptoChart = (datachart: any) => {
 
   return (
     <>
-
       <ResponsiveContainer width="100%" height={500}>
         <LineChart
           data={datachart.datachart}
@@ -73,9 +72,7 @@ const CryptoChart = (datachart: any) => {
           <Line type="monotone" dataKey="Close" stroke="yellow" strokeWidth={2} dot={false} />
         </LineChart>
       </ResponsiveContainer>
-
     </>
-
   );
 };
 
