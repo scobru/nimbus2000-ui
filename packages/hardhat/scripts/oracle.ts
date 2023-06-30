@@ -2,22 +2,18 @@ import ky from "ky";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { ethers } from "hardhat";
+import axios from "axios";
 
-const fetchApi = async () => {
-  const url = process.env.NEXT_PUBLIC_API_URL + "data/";
+const fetchApi = async (): Promise<string | void> => {
+  const url: string = process.env.NEXT_PUBLIC_API_URL + "data/";
   try {
-    const response = await fetch(url, {
+    const response = await axios.get(url, {
       headers: {
         Authorization: String(process.env.NEXT_PUBLIC_API_SECRET_KEY),
       },
-      method: "GET",
     });
 
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const data = await response.json();
+    const data = response.data;
     return data["prediction signal"];
   } catch (error) {
     console.error(error);
