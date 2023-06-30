@@ -23,7 +23,6 @@ const sendTelegramMessage = async (message: string): Promise<void> => {
   }&text=${encodeURIComponent(message)}`;
   try {
     const response = await axios.get(url);
-    console.log(response);
   } catch (error) {
     console.error(error);
   }
