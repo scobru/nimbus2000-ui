@@ -68,10 +68,12 @@ async function main() {
   }
 }
 
+let counter = 0;
+
 async function runEveryMinute() {
-  const counter = 0;
   try {
     await main();
+    counter++;
     console.log("Counter: ", counter);
   } catch (error) {
     console.error(error);
