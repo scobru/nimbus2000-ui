@@ -20,10 +20,11 @@ const fetchApi = async (): Promise<string | void> => {
   }
 };
 
+const oracleAddress = "0xBf5ec3570909D09D817F2AA4FD3Ad607090AaD46"; // Polygon
+const fundAddress = "0x7084EEd9Cd54F366f0Ffd3e89c3e12f0d203a6d0"; // Polygon
+
 async function main() {
   const signers = await ethers.getSigners();
-  const oracleAddress = "0xBf5ec3570909D09D817F2AA4FD3Ad607090AaD46"; // Polygon
-  const fundAddress = "0x7084EEd9Cd54F366f0Ffd3e89c3e12f0d203a6d0"; // Polygon
   const oracle = await ethers.getContractAt("SimpleOracle", oracleAddress, signers[0]);
   const fund = await ethers.getContractAt("Fund", fundAddress, signers[0]);
   const provider = ethers.provider;
