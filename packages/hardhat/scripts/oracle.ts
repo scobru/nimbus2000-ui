@@ -17,6 +17,21 @@ const fetchApi = async (): Promise<string | void> => {
   }
 };
 
+const fetchApiIsOnline = async (): Promise<string | void> => {
+  const url: string = process.env.NEXT_PUBLIC_API_URL + "hello/";
+  try {
+    const response = await axios.get(url);
+    const data = response.data;
+    if (data) {
+      sendTelegramMessage(" 📡 API: ONLINE");
+    } else {
+      sendTelegramMessage(" 📡 API: OFFLINE");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const sendTelegramMessage = async (message: string): Promise<void> => {
   const url: string = `https://api.telegram.org/bot${process.env.TELEGRAM_API_KEY}/sendMessage?chat_id=${
     process.env.TELEGRAM_CHAT_ID
@@ -87,7 +102,8 @@ async function runEveryMinute() {
   } catch (error) {
     console.error(error);
   }
-  sendTelegramMessage(" 🌟 NIMBUS2000-UI-ORACLE STATUS: ACTIVE");
+  sendTelegramMessage(" 🌟 ORACLE: ONLINE");
+  await fetchApiIsOnline();
   setTimeout(runEveryMinute, 60 * 1000);
 }
 
