@@ -17,6 +17,18 @@ const fetchApi = async (): Promise<string | void> => {
   }
 };
 
+const sendTelegramMessage = async (message: string): Promise<void> => {
+  const url: string = `https://api.telegram.org/bot${process.env.TELEGRAM_API_KEY}/sendMessage?chat_id=${
+    process.env.TELEGRAM_CHAT_ID
+  }&text=${encodeURIComponent(message)}`;
+  try {
+    const response = await axios.get(url);
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const oracleAddress = "0xBf5ec3570909D09D817F2AA4FD3Ad607090AaD46"; // Polygon
 const fundAddress = "0x7084EEd9Cd54F366f0Ffd3e89c3e12f0d203a6d0"; // Polygon
 
@@ -76,6 +88,7 @@ async function runEveryMinute() {
   } catch (error) {
     console.error(error);
   }
+  sendTelegramMessage(" 🌟 NIMBUS2000-UI-ORACLE STATUS: ACTIVE");
   setTimeout(runEveryMinute, 60 * 1000);
 }
 
