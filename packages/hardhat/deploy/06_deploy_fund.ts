@@ -1,6 +1,5 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { ethers } from "hardhat";
 
 const pool = "0x847b64f9d3a95e977d157866447a5c0a5dfa0ee5"; // WBTC/USDC Uni-v3 Polygon Pool
 // uniswap v3 polygon swap router

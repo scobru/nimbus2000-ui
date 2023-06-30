@@ -248,7 +248,6 @@ const Dashboard: NextPage = () => {
       return isValid;
     };
     checkValidSubscription();
-
   }, [address, signer, provider]);
 
   useEffect(() => {
@@ -292,9 +291,7 @@ const Dashboard: NextPage = () => {
     } else if (signal == "SELL") {
       return (
         <>
-          <button className=" h-8 text-red-300 bg-red-600 px-2 rounded-md text-md  font-medium my-5">
-            {signal}
-          </button>
+          <button className=" h-8 text-red-300 bg-red-600 px-2 rounded-md text-md  font-medium my-5">{signal}</button>
         </>
       );
     } else if (signal == "NEUTRAL") {
@@ -309,7 +306,6 @@ const Dashboard: NextPage = () => {
   };
 
   const subscriptionBox = () => {
-
     return (
       <>
         <div className="mt-20 p-5 mx-auto shadow-lg rounded-xl dark:bg-transparent border-2 border-gray-300  text-center space-y-6  ">
@@ -340,19 +336,16 @@ const Dashboard: NextPage = () => {
         </div>
       </>
     );
-
   };
 
   return (
-    <div >
-      {!isValidSubscription ? (
-        subscriptionBox()
-      ) : null}
+    <div>
+      {!isValidSubscription ? subscriptionBox() : null}
       <div className="font-semibold my-5">**Data is fetched every 4 hours.</div>
       <br />
       <div>
         {isValidSubscription && signer && provider && data ? (
-          <div >
+          <div>
             <div className="">
               <div className="text-6xl font-bold mb-5 px-5">CHARTS</div>
               <div className="dark:dark:bg-trasparent">
@@ -408,14 +401,14 @@ const Dashboard: NextPage = () => {
                           item: {
                             [x: string]: any;
                             date:
-                            | string
-                            | number
-                            | boolean
-                            | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-                            | React.ReactFragment
-                            | React.ReactPortal
-                            | null
-                            | undefined;
+                              | string
+                              | number
+                              | boolean
+                              | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+                              | React.ReactFragment
+                              | React.ReactPortal
+                              | null
+                              | undefined;
                           },
                           index: React.Key | null | undefined,
                         ) => (
@@ -726,7 +719,6 @@ const Dashboard: NextPage = () => {
                           <tr>
                             <td>TREND</td>
                             <td>DELTA</td>
-
                           </tr>
                           <tr>
                             <td>{resultSignal(data.trend_signal)}</td>
