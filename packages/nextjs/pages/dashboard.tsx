@@ -351,7 +351,7 @@ const Dashboard: NextPage = () => {
       <div className="font-semibold my-5">**Data is fetched every 4 hours.</div>
       <br />
       <div>
-        {isValidSubscription && signer && provider ? (
+        {isValidSubscription && signer && provider && data ? (
           <div >
             <div className="">
               <div className="text-6xl font-bold mb-5 px-5">CHARTS</div>

@@ -8,6 +8,6 @@ temp
 
 #Hardhat files
 cache
-artifacts
+#artifacts
 
-deployments
+#deployments

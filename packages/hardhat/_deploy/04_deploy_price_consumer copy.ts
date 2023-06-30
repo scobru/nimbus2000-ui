@@ -15,11 +15,10 @@ const deployPriceConsumer: DeployFunction = async function (hre: HardhatRuntimeE
   */
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
-  const oracle = await ethers.getContract("PriceOracle", deployer);
 
-  await deploy("PriceConsumer", {
+  await deploy("SimpleOracle", {
     from: deployer,
-    args: [oracle.address],
+    args: [],
     log: true,
   });
 };
