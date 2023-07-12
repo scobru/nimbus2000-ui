@@ -6,15 +6,33 @@ module.exports = {
   darkTheme: "scaffoldEthDark",
   // DaisyUI theme colors
   daisyui: {
-    themes: true,
-    darkTheme: "dark", // name of one of the included themes for dark mode
-    base: true, // applies background color and foreground color for root element by default
-    styled: true, // include daisyUI colors and design decisions for all components
-    utils: true, // adds responsive and modifier utility classes
-    rtl: false, // rotate style direction from left-to-right to right-to-left. You also need to add dir="rtl" to your html tag and install `tailwindcss-flip` plugin for Tailwind CSS.
-    prefix: "", // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
-    logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
+    themes: [{
+      light: {
+        "primary": "#ffffff",
+        "secondary": "#f6f6f8",
+        "accent": "#007aff",
+        "neutral": "#8e8e93",
+        "base-100": "#f4f4f7",
+        "info": "#0a84ff",
+        "success": "#30d158",
+        "warning": "#ff9f0a",
+        "error": "#ff453a",
+      },
+      dark: {
+        "primary": "#121212",
+        "secondary": "#1e1e1e",
+        "accent": "#0c66ff",
+        "neutral": "#646464",
+        "base-100": "#282828",
+        "info": "#0c8dff",
+        "success": "#2fdd31",
+        "warning": "#ff7f0b",
+        "error": "#ff3a2f",
+      },
+    }, ]
+
   },
+
   theme: {
     // Extend Tailwind classes (e.g. font-bai-jamjuree, animate-grow)
     extend: {
@@ -31,8 +49,12 @@ module.exports = {
           },
         },
         zoom: {
-          "0%, 100%": { transform: "scale(1, 1)" },
-          "50%": { transform: "scale(1.1, 1.1)" },
+          "0%, 100%": {
+            transform: "scale(1, 1)"
+          },
+          "50%": {
+            transform: "scale(1.1, 1.1)"
+          },
         },
       },
       animation: {

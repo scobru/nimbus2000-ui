@@ -38,8 +38,8 @@ const Dashboard: NextPage = () => {
   const [regr_chart, setRegrChart] = useState<any>();
 
   const txData = useTransactor(signer as ethers.Signer);
-  const tiersUrl = "https://tiersapp.vercel.app/viewTier?addr=0xCe61B3ECeF196E5818D85d682Fcc171A622b4c8B";
-  const tiersAddress = "0xCe61B3ECeF196E5818D85d682Fcc171A622b4c8B";
+  const tiersUrl = "https://tiersapp.vercel.app/viewTier?addr=0x71BC363a673640F5AD7353886Ab42D0C4FdbD276";
+  const tiersAddress = "0x71BC363a673640F5AD7353886Ab42D0C4FdbD276";
   const tiersAbi = [
     "function getSubscriptionStatus(address _addr) public view returns (bool)",
     "function subscribe() public payable",
@@ -401,14 +401,14 @@ const Dashboard: NextPage = () => {
                           item: {
                             [x: string]: any;
                             date:
-                              | string
-                              | number
-                              | boolean
-                              | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-                              | React.ReactFragment
-                              | React.ReactPortal
-                              | null
-                              | undefined;
+                            | string
+                            | number
+                            | boolean
+                            | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+                            | React.ReactFragment
+                            | React.ReactPortal
+                            | null
+                            | undefined;
                           },
                           index: React.Key | null | undefined,
                         ) => (
