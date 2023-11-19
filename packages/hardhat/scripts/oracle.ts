@@ -1,5 +1,7 @@
 import { ethers } from "hardhat";
 import axios from "axios";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const fetchApi = async (): Promise<string | void> => {
   const url: string = process.env.NEXT_PUBLIC_API_URL + "data/";
@@ -33,9 +35,8 @@ const fetchApiIsOnline = async (): Promise<string | void> => {
 };
 
 const sendTelegramMessage = async (message: string): Promise<void> => {
-  const url: string = `https://api.telegram.org/bot${process.env.TELEGRAM_API_KEY}/sendMessage?chat_id=${
-    process.env.TELEGRAM_CHAT_ID
-  }&text=${encodeURIComponent(message)}`;
+  const url: string = `https://api.telegram.org/bot${process.env.TELEGRAM_API_KEY}/sendMessage?chat_id=${process.env.TELEGRAM_CHAT_ID
+    }&text=${encodeURIComponent(message)}`;
   try {
     const response = await axios.get(url);
   } catch (error) {
