@@ -66,6 +66,9 @@ async function main() {
   } else if (response == "SELL" && response) {
     console.log("SELL");
     result = 0;
+  } else if (response == "NEUTRAL" && response) {
+    console.log("NEUTRAL");
+    result = 2;
   } else if (!response) {
     console.log("No response from API");
     return;
@@ -74,22 +77,24 @@ async function main() {
   if (status == result) {
     console.log("Status already updated");
   } else {
-    try {
-      const messageForFund = result == 1 ? true : false;
-      console.log("   Change Status ...");
-      const transaction1 = await oracle.changeStatus(result);
-      console.log("Transaction sent, waiting for it to be mined");
-      await transaction1.wait();
-      console.log("Transaction mined");
-      const transaction2 = await fund.executeSwap(messageForFund);
-      console.log("Transaction sent, waiting for it to be mined");
-      await transaction2.wait();
-      console.log("Transaction mined");
-    } catch (e) {
-      console.log("Can't connect to network", networkName);
+    if(result != 2){
+      try {
+        const messageForFund = result == 1 ? true : false;
+        console.log("   Change Status ...");
+        const transaction1 = await oracle.changeStatus(result);
+        console.log("Transaction sent, waiting for it to be mined");
+        await transaction1.wait();
+        console.log("Transaction mined");
+        const transaction2 = await fund.executeSwap(messageForFund);
+        console.log("Transaction sent, waiting for it to be mined");
+        await transaction2.wait();
+        console.log("Transaction mined");
+      } catch (e) {
+        console.log("Can't connect to network", networkName);
+      }
+      status = await oracle.getStatus();
+      console.log("New Status: ", await status);
     }
-    status = await oracle.getStatus();
-    console.log("New Status: ", await status);
   }
 }
 
